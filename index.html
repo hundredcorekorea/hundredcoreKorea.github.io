@@ -3,223 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hundred Code Korea</title>
+    <title>Hundred Code Korea - 일상을 더 스마트하게</title>
+    <meta name="description" content="100일의 도전으로 삶을 바꾸는 앱. 생산성, 건강, 라이프스타일을 위한 스마트한 솔루션.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg-dark: #0f0f23;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 배경 애니메이션 */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
+            z-index: -1;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.2), transparent);
+            background-size: 250px 250px;
+            animation: twinkle 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        /* 헤더 */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* 카테고리 섹션 */
+        .category {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .category-title span {
+            font-size: 1.75rem;
+        }
+
+        .category-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        /* 앱 그리드 */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        /* 앱 카드 */
+        .app-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 60px var(--glow);
+        }
+
+        .app-card:hover::before {
+            opacity: 1;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            font-size: 2rem;
+            flex-shrink: 0;
         }
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-        .apps {
-            display: grid;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .app-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: inherit;
-        }
-        .app-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-        .app-icon {
-            font-size: 2.5em;
-        }
+
+        .app-icon.realpay { background: linear-gradient(135deg, #10b981, #059669); }
+        .app-icon.pilltime { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .app-icon.wolse { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .app-icon.jeonse { background: linear-gradient(135deg, #34d399, #10b981); }
+        .app-icon.plip { background: linear-gradient(135deg, #4ade80, #22c55e); }
+        .app-icon.petmoney { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .app-icon.sullae { background: linear-gradient(135deg, #f87171, #ef4444); }
+        .app-icon.dreamflow { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        .app-icon.mission100 { background: linear-gradient(135deg, #fb923c, #f97316); }
+
         .app-info h3 {
-            color: #333;
-            margin-bottom: 5px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
         }
-        .app-info p {
-            color: #666;
-            font-size: 0.9em;
+
+        .app-info .tagline {
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
+
+        .app-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
         .app-links {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
-            margin-top: 8px;
         }
-        .app-links a {
-            font-size: 0.75em;
-            color: #667eea;
+
+        .app-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
             text-decoration: none;
-            padding: 4px 10px;
-            border: 1px solid #667eea;
-            border-radius: 12px;
             transition: all 0.2s;
         }
-        .app-links a:hover {
-            background: #667eea;
+
+        .app-link.store {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
-        .section-title {
-            font-size: 1.2em;
-            color: #333;
-            margin: 30px 0 15px 0;
-            text-align: left;
-            padding-left: 10px;
-            border-left: 4px solid #667eea;
+
+        .app-link.store:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px var(--glow);
         }
-        .links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
+
+        .app-link.legal {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
         }
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 2px solid #667eea;
-            border-radius: 25px;
-            transition: all 0.3s;
+
+        .app-link.legal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
         }
-        .links a:hover {
-            background: #667eea;
-            color: white;
-        }
+
+        /* 푸터 */
         footer {
-            margin-top: 30px;
-            color: #999;
-            font-size: 0.85em;
+            text-align: center;
+            padding: 60px 24px 40px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+
+            header {
+                margin-bottom: 50px;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .app-card {
+                padding: 20px;
+            }
+
+            .app-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 1.75rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bg-gradient"></div>
+    <div class="stars"></div>
+
     <div class="container">
-        <h1>🚀 Hundred Code Korea</h1>
-        <p class="subtitle">일상을 더 스마트하게 만드는 앱</p>
+        <header>
+            <div class="logo">🚀</div>
+            <h1>Hundred Code Korea</h1>
+            <p class="subtitle">100일의 도전으로 삶을 바꾸는 앱<br>일상을 더 스마트하게 만드는 솔루션</p>
+        </header>
 
-        <h2 class="section-title">생산성</h2>
-        <div class="apps">
-            <div class="app-card">
-                <span class="app-icon">💰</span>
-                <div class="app-info">
-                    <h3>RealPay 시급지킴이</h3>
-                    <p>프리랜서·알바생을 위한 실시간 시급 계산</p>
-                    <div class="app-links">
-                        <a href="realpay/terms.html">이용약관</a>
-                        <a href="realpay/privacy.html">개인정보처리방침</a>
+        <!-- 생산성 -->
+        <section class="category">
+            <h2 class="category-title"><span>⚡</span> 생산성</h2>
+            <div class="apps-grid">
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon realpay">💰</div>
+                        <div class="app-info">
+                            <h3>RealPay 시급지킴이</h3>
+                            <span class="tagline">실시간 시급 계산기</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="app-card">
-                <span class="app-icon">💊</span>
-                <div class="app-info">
-                    <h3>필타임</h3>
-                    <p>스마트한 복약 알림 관리</p>
+                    <p class="app-description">프리랜서와 알바생을 위한 실시간 시급 계산 앱. 일한 시간을 정확하게 기록하고 급여를 관리하세요.</p>
                     <div class="app-links">
-                        <a href="pill-time/terms.html">이용약관</a>
-                        <a href="pill-time/privacy.html">개인정보처리방침</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.realpay" class="app-link store" target="_blank">Play Store</a>
+                        <a href="realpay/terms.html" class="app-link legal">이용약관</a>
+                        <a href="realpay/privacy.html" class="app-link legal">개인정보</a>
                     </div>
-                </div>
-            </div>
-        </div>
+                </article>
 
-        <h2 class="section-title">부동산 관리</h2>
-        <div class="apps">
-            <div class="app-card">
-                <span class="app-icon">🏠</span>
-                <div class="app-info">
-                    <h3>월세장부</h3>
-                    <p>집주인을 위한 가장 쉬운 월세 관리</p>
-                    <div class="app-links">
-                        <a href="wolse-ledger/terms.html">이용약관</a>
-                        <a href="wolse-ledger/privacy.html">개인정보처리방침</a>
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon pilltime">💊</div>
+                        <div class="app-info">
+                            <h3>필타임</h3>
+                            <span class="tagline">약 복용 알림 관리</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="app-card">
-                <span class="app-icon">🏢</span>
-                <div class="app-info">
-                    <h3>전세장부</h3>
-                    <p>전세 계약 및 보증금 관리</p>
+                    <p class="app-description">정확한 시간에 약을 복용할 수 있도록 도와주는 스마트 알림 앱. 복약 기록도 한눈에.</p>
                     <div class="app-links">
-                        <a href="jeonse-ledger/terms.html">이용약관</a>
-                        <a href="jeonse-ledger/privacy.html">개인정보처리방침</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.pilltime" class="app-link store" target="_blank">Play Store</a>
+                        <a href="pilltime/terms.html" class="app-link legal">이용약관</a>
+                        <a href="pilltime/privacy.html" class="app-link legal">개인정보</a>
                     </div>
-                </div>
+                </article>
             </div>
-        </div>
+        </section>
 
-        <h2 class="section-title">라이프스타일</h2>
-        <div class="apps">
-            <div class="app-card">
-                <span class="app-icon">🌱</span>
-                <div class="app-info">
-                    <h3>Plip 플립</h3>
-                    <p>AI 식물 케어 도우미</p>
-                    <div class="app-links">
-                        <a href="plip/terms.html">이용약관</a>
-                        <a href="plip/privacy.html">개인정보처리방침</a>
+        <!-- 부동산 관리 -->
+        <section class="category">
+            <h2 class="category-title"><span>🏠</span> 부동산 관리</h2>
+            <div class="apps-grid">
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon wolse">🏘️</div>
+                        <div class="app-info">
+                            <h3>월세장부</h3>
+                            <span class="tagline">집주인을 위한 월세 관리</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="app-card">
-                <span class="app-icon">🐾</span>
-                <div class="app-info">
-                    <h3>펫머니</h3>
-                    <p>반려동물 지출 관리</p>
+                    <p class="app-description">임대인을 위한 가장 쉬운 월세 관리 앱. 수입/지출 기록, 세입자 관리, 계약 알림까지.</p>
                     <div class="app-links">
-                        <a href="pet-money/terms.html">이용약관</a>
-                        <a href="pet-money/privacy.html">개인정보처리방침</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.wolse" class="app-link store" target="_blank">Play Store</a>
+                        <a href="wolse-ledger/terms.html" class="app-link legal">이용약관</a>
+                        <a href="wolse-ledger/privacy.html" class="app-link legal">개인정보</a>
                     </div>
-                </div>
-            </div>
-            <div class="app-card">
-                <span class="app-icon">🍻</span>
-                <div class="app-info">
-                    <h3>술래</h3>
-                    <p>술자리 게임 모음</p>
-                    <div class="app-links">
-                        <a href="sullae/terms.html">이용약관</a>
-                        <a href="sullae/privacy.html">개인정보처리방침</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </article>
 
-        <div class="links">
-            <a href="mailto:osu355@gmail.com">📧 문의하기</a>
-            <a href="https://github.com/hundredcodeKorea">GitHub</a>
-        </div>
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon jeonse">📋</div>
+                        <div class="app-info">
+                            <h3>전세장부</h3>
+                            <span class="tagline">전세금 및 계약 관리</span>
+                        </div>
+                    </div>
+                    <p class="app-description">전세 계약과 보증금을 체계적으로 관리. 계약 만료일 알림과 전세금 반환 기록까지.</p>
+                    <div class="app-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.jeonse" class="app-link store" target="_blank">Play Store</a>
+                        <a href="jeonse-ledger/terms.html" class="app-link legal">이용약관</a>
+                        <a href="jeonse-ledger/privacy.html" class="app-link legal">개인정보</a>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-        <footer>
-            © 2026 Hundred Code Korea. All rights reserved.
-        </footer>
+        <!-- 라이프스타일 -->
+        <section class="category">
+            <h2 class="category-title"><span>🌿</span> 라이프스타일</h2>
+            <div class="apps-grid">
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon plip">🌱</div>
+                        <div class="app-info">
+                            <h3>Plip 플립</h3>
+                            <span class="tagline">AI 식물 케어 도우미</span>
+                        </div>
+                    </div>
+                    <p class="app-description">AI가 식물 상태를 분석하고 맞춤형 케어 가이드를 제공합니다. 물주기 알림도 자동으로.</p>
+                    <div class="app-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.plip" class="app-link store" target="_blank">Play Store</a>
+                        <a href="plip/terms.html" class="app-link legal">이용약관</a>
+                        <a href="plip/privacy.html" class="app-link legal">개인정보</a>
+                    </div>
+                </article>
+
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon petmoney">🐾</div>
+                        <div class="app-info">
+                            <h3>펫머니</h3>
+                            <span class="tagline">반려동물 지출 추적</span>
+                        </div>
+                    </div>
+                    <p class="app-description">반려동물에게 들어가는 비용을 한눈에. 사료, 병원비, 용품비 등을 카테고리별로 관리.</p>
+                    <div class="app-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.petmoney" class="app-link store" target="_blank">Play Store</a>
+                        <a href="pet-money/terms.html" class="app-link legal">이용약관</a>
+                        <a href="pet-money/privacy.html" class="app-link legal">개인정보</a>
+                    </div>
+                </article>
+
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon sullae">🍻</div>
+                        <div class="app-info">
+                            <h3>술래</h3>
+                            <span class="tagline">술자리 게임 모음</span>
+                        </div>
+                    </div>
+                    <p class="app-description">모임이 더 즐거워지는 술자리 게임 컬렉션. 진실 게임, 랜덤 벌칙, 폭탄 게임 등.</p>
+                    <div class="app-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.sullae" class="app-link store" target="_blank">Play Store</a>
+                        <a href="sullae/terms.html" class="app-link legal">이용약관</a>
+                        <a href="sullae/privacy.html" class="app-link legal">개인정보</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 자기 계발 -->
+        <section class="category">
+            <h2 class="category-title"><span>🎯</span> 자기 계발</h2>
+            <div class="apps-grid">
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon dreamflow">🌙</div>
+                        <div class="app-info">
+                            <h3>드림플로우</h3>
+                            <span class="tagline">AI 루시드 드림 트레이닝</span>
+                        </div>
+                    </div>
+                    <p class="app-description">과학적 방법으로 자각몽을 훈련하세요. Lumi AI 코치와 함께하는 14주 프로그램.</p>
+                    <div class="app-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.dreamflow" class="app-link store" target="_blank">Play Store</a>
+                        <a href="dreamflow/terms.html" class="app-link legal">이용약관</a>
+                        <a href="dreamflow/privacy.html" class="app-link legal">개인정보</a>
+                    </div>
+                </article>
+
+                <article class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon mission100">💪</div>
+                        <div class="app-info">
+                            <h3>Mission 100</h3>
+                            <span class="tagline">100일 운동 챌린지</span>
+                        </div>
+                    </div>
+                    <p class="app-description">팔굽혀펴기, 스쿼트, 플랭크 등 100일 챌린지 시리즈. 매일 조금씩, 꾸준히 성장하세요.</p>
+                    <div class="app-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hundredcode.mission100" class="app-link store" target="_blank">Play Store</a>
+                        <a href="mission100/terms.html" class="app-link legal">이용약관</a>
+                        <a href="mission100/privacy.html" class="app-link legal">개인정보</a>
+                    </div>
+                </article>
+            </div>
+        </section>
     </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="mailto:hundredcode.korea@gmail.com">📧 문의하기</a>
+            <a href="https://github.com/hundredcodeKorea" target="_blank">🐙 GitHub</a>
+            <a href="privacy-policy.html">개인정보처리방침</a>
+            <a href="terms.html">이용약관</a>
+        </div>
+        <p class="copyright">© 2025 Hundred Code Korea. All rights reserved.</p>
+    </footer>
 </body>
 </html>
