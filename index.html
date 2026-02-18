@@ -887,6 +887,29 @@
             </div>
         </section>
 
+        <!-- 게임 -->
+        <section class="category">
+            <h2 class="category-title"><span>🎮</span> 게임</h2>
+            <div class="apps-grid">
+                <article class="app-card" onclick="openModal('nyanquest')">
+                    <div class="app-header">
+                        <div class="app-icon"><img src="icons/nyanquest.png" alt="냥퀘스트"></div>
+                        <div class="app-info">
+                            <h3>냥퀘스트</h3>
+                            <span class="tagline">고양이 TRPG 모험</span>
+                            <span class="app-date">2026.02.17 출시</span>
+                        </div>
+                    </div>
+                    <p class="app-description">AI GM과 함께하는 고양이 테마 TRPG. 솔로 퀘스트부터 멀티플레이어 파티까지, 커뮤니티에서 모험가들을 만나보세요.</p>
+                    <div class="app-links">
+                        <a href="https://nyanquest.vercel.app" class="app-link store" target="_blank" onclick="event.stopPropagation()">웹 플레이</a>
+                        <a href="https://nyanquest.vercel.app/terms" class="app-link legal" target="_blank" onclick="event.stopPropagation()">이용약관</a>
+                        <a href="https://nyanquest.vercel.app/privacy" class="app-link legal" target="_blank" onclick="event.stopPropagation()">개인정보</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <!-- 자기 계발 -->
         <section class="category">
             <h2 class="category-title"><span>🎯</span> 자기 계발</h2>
@@ -1075,6 +1098,19 @@
                 releaseDate: '심사중',
                 lastUpdate: null
             },
+            nyanquest: {
+                iconImg: 'icons/nyanquest.png',
+                title: '냥퀘스트',
+                tagline: '고양이 TRPG 모험',
+                description: 'AI GM과 함께하는 고양이 테마 TRPG 플랫폼입니다. 솔로 퀘스트에서 AI 게임 마스터가 이끄는 모험을 즐기거나, 파티를 모집해 멀티플레이어 세션을 플레이하세요. 커뮤니티에서 다른 모험가들과 소통하고, 캐릭터를 성장시켜 나가는 재미를 느껴보세요.',
+                screenshots: [],
+                storeUrl: 'https://nyanquest.vercel.app',
+                storeLabel: '웹 플레이',
+                termsUrl: 'https://nyanquest.vercel.app/terms',
+                privacyUrl: 'https://nyanquest.vercel.app/privacy',
+                releaseDate: '2026.02.17',
+                lastUpdate: '2026.02.17'
+            },
             mission100: {
                 iconImg: 'icons/mission100.png',
                 title: 'Mission 100',
@@ -1133,7 +1169,8 @@
             const links = document.getElementById('modalLinks');
             let linksHtml = '';
             if (app.storeUrl) {
-                linksHtml += `<a href="${app.storeUrl}" class="modal-link store" target="_blank">▶ Play Store에서 다운로드</a>`;
+                const storeText = app.storeLabel ? `▶ ${app.storeLabel}` : '▶ Play Store에서 다운로드';
+                linksHtml += `<a href="${app.storeUrl}" class="modal-link store" target="_blank">${storeText}</a>`;
             } else {
                 linksHtml += `<span class="modal-link store" style="opacity: 0.5; cursor: default;">준비중</span>`;
             }
