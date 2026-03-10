@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moonlit Oracle — AI Tarot & Fortune Reading</title>
+  <meta name="description" content="Three AI personas deliver tarot, palmistry, fortune, and elemental readings in K-webtoon style. Available in 12 languages worldwide.">
+  <meta property="og:title" content="Moonlit Oracle — AI Tarot & Fortune Reading">
+  <meta property="og:description" content="Under the moonlight, three oracles read your destiny. K-webtoon style AI fortune telling.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #07060E;
+      --surface: #12111D;
+      --card: #1A1830;
+      --accent: #CBA6F7;
+      --pink: #E040FB;
+      --cyan: #00E5FF;
+      --text: #E8E4F0;
+      --text-dim: rgba(232,228,240,0.6);
+      --glass: rgba(26,24,48,0.55);
+      --border: rgba(203,166,247,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* ── Stars Background ── */
+    .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .star {
+      position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%;
+      animation: twinkle var(--dur) ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { 0% { opacity: 0.1; } 100% { opacity: var(--max-o, 0.8); } }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(7,6,14,0.8); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-decoration: none; }
+    .nav-logo span { color: var(--text-dim); font-weight: 400; font-size: 13px; margin-left: 8px; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      padding: 8px 20px; border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--pink));
+      color: #0A0A0F; font-weight: 600; font-size: 13px; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(203,166,247,0.3); }
+
+    /* ── Shared ── */
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 12px; }
+    .section-title { font-family: 'Cinzel', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .section-desc { font-size: 16px; color: var(--text-dim); max-width: 560px; line-height: 1.8; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--pink)); color: #0A0A0F;
+      font-weight: 700; font-size: 15px; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(203,166,247,0.35); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 28px;
+      border: 1px solid var(--border); background: var(--glass); color: var(--text);
+      font-weight: 600; font-size: 15px; text-decoration: none; backdrop-filter: blur(10px);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(203,166,247,0.08); }
+
+    /* ── Hero — Interactive Character Select ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 100px 24px 60px; position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg-glow {
+      position: absolute; inset: 0; z-index: 0;
+      transition: background 0.8s ease;
+      background: radial-gradient(ellipse at 50% 80%, rgba(203,166,247,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-bg-glow[data-persona="oracle"] {
+      background: radial-gradient(ellipse at 50% 80%, rgba(203,166,247,0.12) 0%, transparent 60%);
+    }
+    .hero-bg-glow[data-persona="witch"] {
+      background: radial-gradient(ellipse at 50% 80%, rgba(224,64,251,0.12) 0%, transparent 60%);
+    }
+    .hero-bg-glow[data-persona="chaos"] {
+      background: radial-gradient(ellipse at 50% 80%, rgba(0,229,255,0.12) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 1120px; width: 100%; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
+      border-radius: 20px; border: 1px solid var(--border); background: var(--glass);
+      font-size: 13px; color: var(--accent); margin-bottom: 20px; backdrop-filter: blur(10px);
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 700;
+      line-height: 1.15; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub { font-size: 17px; color: var(--text-dim); max-width: 520px; margin: 0 auto 36px; line-height: 1.8; }
+
+    /* Character Select Row */
+    .char-select {
+      display: flex; justify-content: center; gap: 32px;
+      margin-bottom: 40px; position: relative;
+    }
+    .char-select-item {
+      display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; position: relative; transition: transform 0.4s ease;
+    }
+    .char-select-item:hover { transform: translateY(-12px) scale(1.04); }
+    .char-select-item.active { transform: translateY(-12px) scale(1.04); }
+    .char-img-wrap {
+      width: 180px; height: 240px; border-radius: 24px; overflow: hidden;
+      border: 2px solid var(--border); position: relative;
+      transition: border-color 0.4s, box-shadow 0.4s;
+      background: var(--card);
+    }
+    .char-select-item:hover .char-img-wrap,
+    .char-select-item.active .char-img-wrap {
+      border-color: var(--char-color, var(--accent));
+      box-shadow: 0 8px 40px rgba(203,166,247,0.2);
+    }
+    .char-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .char-select-name {
+      margin-top: 12px; font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700;
+      transition: color 0.3s;
+    }
+    .char-select-role {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--text-dim); transition: color 0.3s;
+    }
+
+    /* Speech bubble that appears on hover */
+    .char-speech {
+      position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 240px; max-width: 300px; padding: 14px 18px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; font-size: 14px; font-style: italic;
+      line-height: 1.6; text-align: center; margin-bottom: 12px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      transform: translateX(-50%) translateY(8px);
+    }
+    .char-speech::after {
+      content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      border: 8px solid transparent; border-top-color: var(--card);
+    }
+    .char-select-item:hover .char-speech,
+    .char-select-item.active .char-speech {
+      opacity: 1; pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ── Character Showcase (horizontal scroll) ── */
+    .char-showcase { padding: 100px 0 120px; overflow: hidden; }
+    .char-showcase-inner { text-align: center; }
+    .char-strip {
+      display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+      margin-top: 48px;
+    }
+    .char-card {
+      width: 260px; border-radius: 24px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--card);
+      transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
+    }
+    .char-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .char-card-img {
+      width: 100%; height: 320px; object-fit: cover; object-position: top;
+      border-bottom: 1px solid var(--border);
+    }
+    .char-card-body { padding: 20px; text-align: left; }
+    .char-card-body h3 { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .char-card-body .role { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+    .char-card-body p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+    .char-card-body .quote {
+      margin-top: 12px; padding: 10px 14px; border-radius: 10px;
+      font-size: 12px; font-style: italic; line-height: 1.5;
+    }
+
+    /* ── Cutscene Demo ── */
+    .cutscene-demo { padding: 120px 0; background: var(--surface); }
+    .cutscene-layout {
+      display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center;
+      margin-top: 48px;
+    }
+    .cutscene-phone {
+      width: 320px; background: var(--bg); border-radius: 32px;
+      border: 2px solid var(--border); padding: 16px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    .phone-notch {
+      width: 100px; height: 6px; background: var(--card); border-radius: 3px;
+      margin: 0 auto 16px;
+    }
+    .phone-screen { border-radius: 20px; overflow: hidden; }
+    .cutscene-frame {
+      background: var(--card); border-radius: 16px; padding: 16px;
+      border: 1px solid var(--border);
+    }
+    .cutscene-char-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .cutscene-avatar {
+      width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+    .cutscene-name { font-size: 13px; font-weight: 700; color: var(--accent); }
+    .cutscene-emotion { font-size: 11px; color: var(--text-dim); }
+    .cutscene-bubble {
+      background: #1A1530; border: 1px solid rgba(203,166,247,0.2);
+      border-radius: 14px; padding: 16px 18px; font-size: 14px; line-height: 1.7;
+      position: relative; margin-left: 8px;
+    }
+    .cutscene-bubble::before {
+      content: ''; position: absolute; left: -6px; top: 16px;
+      border: 6px solid transparent; border-right-color: #1A1530;
+    }
+    .cutscene-tap {
+      text-align: center; margin-top: 12px; font-size: 12px;
+      color: var(--text-dim); opacity: 0.5;
+      animation: pulse-tap 2s ease-in-out infinite;
+    }
+    @keyframes pulse-tap { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+    .cutscene-features { list-style: none; }
+    .cutscene-features li {
+      display: flex; align-items: flex-start; gap: 16px; padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cutscene-features li:last-child { border-bottom: none; }
+    .feat-icon {
+      width: 44px; height: 44px; border-radius: 14px; background: rgba(203,166,247,0.08);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent);
+    }
+    .feat-text h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .feat-text p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── Services Grid ── */
+    .services { padding: 120px 0; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .service-card {
+      position: relative; padding: 32px 24px; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--card);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; cursor: pointer; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 20px;
+      background: linear-gradient(135deg, var(--glow, var(--accent)) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover { transform: translateY(-4px); border-color: rgba(203,166,247,0.3); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+    .service-card:hover::before { opacity: 0.06; }
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .service-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+    .service-card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; position: relative; z-index: 1; }
+    .service-tag {
+      display: inline-block; margin-top: 16px; padding: 4px 12px;
+      border-radius: 10px; font-size: 11px; font-weight: 600; position: relative; z-index: 1;
+    }
+
+    /* ── How It Works ── */
+    .how-it-works { padding: 120px 0; background: var(--surface); }
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+    .step-card {
+      text-align: center; padding: 32px 20px; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--bg); position: relative;
+    }
+    .step-number {
+      font-family: 'Cinzel', serif; font-size: 48px; font-weight: 700;
+      color: var(--accent); opacity: 0.15; position: absolute; top: 12px; left: 20px;
+    }
+    .step-card .material-icons-round { font-size: 32px; color: var(--accent); margin-bottom: 16px; display: block; }
+    .step-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .step-card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── Languages ── */
+    .languages { padding: 80px 0; text-align: center; }
+    .lang-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+    .lang-chip {
+      padding: 10px 20px; border-radius: 24px; border: 1px solid var(--border);
+      background: var(--card); font-size: 14px; transition: border-color 0.2s, background 0.2s;
+    }
+    .lang-chip:hover { border-color: var(--accent); background: rgba(203,166,247,0.06); }
+    .lang-chip.active { border-color: var(--accent); background: rgba(203,166,247,0.12); color: var(--accent); font-weight: 600; }
+
+    /* ── CTA ── */
+    .cta-section { padding: 120px 0; text-align: center; position: relative; background: var(--surface); }
+    .cta-section::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(203,166,247,0.06) 0%, transparent 70%); pointer-events: none;
+    }
+    .cta-character {
+      margin-bottom: 40px;
+    }
+    .cta-character img {
+      max-height: 300px; width: auto;
+      filter: drop-shadow(0 0 40px rgba(203,166,247,0.12));
+    }
+    .cta-section .section-title { margin-bottom: 24px; }
+    .cta-section .section-desc { margin: 0 auto 40px; text-align: center; }
+
+    /* ── Footer ── */
+    footer { padding: 48px 24px; border-top: 1px solid var(--border); text-align: center; }
+    .footer-brand { font-family: 'Cinzel', serif; font-size: 16px; color: var(--accent); margin-bottom: 8px; }
+    footer p { font-size: 12px; color: var(--text-dim); }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-top: 16px; list-style: none; }
+    .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 13px; }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── Scroll Reveal ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Mobile: touch-first, no hover dependency ── */
+    @media (hover: none) {
+      /* On touch devices, active item always shows speech bubble */
+      .char-select-item:hover .char-speech { opacity: 0; }
+      .char-select-item:hover { transform: none; }
+      .char-select-item:hover .char-img-wrap { border-color: var(--border); box-shadow: none; }
+      .char-select-item.active .char-speech { opacity: 1; transform: translateX(-50%) translateY(0); }
+      .char-select-item.active { transform: translateY(-8px) scale(1.03); }
+      .char-select-item.active .char-img-wrap {
+        border-color: var(--char-color, var(--accent));
+        box-shadow: 0 8px 40px rgba(203,166,247,0.2);
+      }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .char-select { gap: 12px; }
+      .char-img-wrap { width: 120px; height: 160px; border-radius: 16px; }
+      .char-select-name { font-size: 12px; }
+      .char-speech { min-width: 160px; max-width: 200px; font-size: 11px; padding: 10px 12px; }
+      .char-strip { flex-direction: column; align-items: center; }
+      .char-card { width: 90%; max-width: 320px; }
+      .cutscene-layout { grid-template-columns: 1fr; }
+      .cutscene-phone { margin: 0 auto; width: 280px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .char-img-wrap { width: 100px; height: 140px; }
+      .char-speech { min-width: 140px; max-width: 170px; font-size: 10px; }
+    }
+
+    .material-icons-round { font-family: 'Material Icons Round'; font-size: 24px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">MOONLIT ORACLE <span>by Hundred Core</span></a>
+    <ul class="nav-links">
+      <li><a href="#personas">Personas</a></li>
+      <li><a href="#webtoon">Webtoon Reading</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">How It Works</a></li>
+    </ul>
+    <a href="#download" class="nav-cta">Get the App</a>
+  </nav>
+
+  <!-- ═══════ Hero — Interactive Character Select ═══════ -->
+  <section class="hero">
+    <div class="hero-bg-glow" id="heroBgGlow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="material-icons-round" style="font-size:16px;">auto_awesome</span>
+        AI-Powered Mystical Reading
+      </div>
+      <h1>Choose Your Oracle</h1>
+      <p class="hero-sub">Three AI characters, three truths. Pick your oracle &mdash; and let them read your destiny in K-webtoon style.</p>
+
+      <div class="char-select">
+        <!-- The Oracle -->
+        <div class="char-select-item active" data-persona="oracle" style="--char-color: #CBA6F7;"
+             onmouseenter="setPersona('oracle')" onclick="setPersona('oracle')">
+          <div class="char-speech" style="border-color: rgba(203,166,247,0.3);">
+            "Destiny isn't gift wrap. You gotta rip it open."
+          </div>
+          <div class="char-img-wrap">
+            <img src="characters/serious.webp" alt="The Oracle">
+          </div>
+          <div class="char-select-name" style="color:#CBA6F7;">The Oracle</div>
+          <div class="char-select-role">Unhinged Mystic</div>
+        </div>
+
+        <!-- Velvet Witch -->
+        <div class="char-select-item" data-persona="witch" style="--char-color: #E040FB;"
+             onmouseenter="setPersona('witch')" onclick="setPersona('witch')">
+          <div class="char-speech" style="border-color: rgba(224,64,251,0.3);">
+            "What the cards whisper... you already know, darling."
+          </div>
+          <div class="char-img-wrap">
+            <img src="characters/happy.webp" alt="Velvet Witch">
+          </div>
+          <div class="char-select-name" style="color:#E040FB;">Velvet Witch</div>
+          <div class="char-select-role">Elegant Sorceress</div>
+        </div>
+
+        <!-- Chaos Agent -->
+        <div class="char-select-item" data-persona="chaos" style="--char-color: #00E5FF;"
+             onmouseenter="setPersona('chaos')" onclick="setPersona('chaos')">
+          <div class="char-speech" style="border-color: rgba(0,229,255,0.3);">
+            "The universe sent you a meme. Wanna read it?"
+          </div>
+          <div class="char-img-wrap">
+            <img src="characters/dramatic.webp" alt="Chaos Agent">
+          </div>
+          <div class="char-select-name" style="color:#00E5FF;">Chaos Agent</div>
+          <div class="char-select-role">Cosmic Trickster</div>
+        </div>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="#download" class="btn-primary">
+          <span class="material-icons-round" style="font-size:20px;">download</span>
+          Download Free
+        </a>
+        <a href="#webtoon" class="btn-secondary">
+          <span class="material-icons-round" style="font-size:20px;">auto_stories</span>
+          See It in Action
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Character Showcase ═══════ -->
+  <section class="char-showcase" id="personas">
+    <div class="container char-showcase-inner">
+      <div class="section-label reveal">Meet the Oracles</div>
+      <h2 class="section-title reveal">Three Voices, Three Truths</h2>
+      <p class="section-desc reveal" style="margin:0 auto;">Each oracle has a distinct personality. Same cards, completely different readings.</p>
+
+      <div class="char-strip">
+        <!-- Oracle -->
+        <div class="char-card reveal reveal-delay-1">
+          <img class="char-card-img" src="characters/serious.webp" alt="The Oracle">
+          <div class="char-card-body">
+            <h3 style="color:#CBA6F7;">The Oracle</h3>
+            <div class="role" style="color:#CBA6F7;">Unhinged Mystic</div>
+            <p>Brutally honest and unpredictable. Tells you what you need to hear, not what you want.</p>
+            <div class="quote" style="background:rgba(203,166,247,0.06); color:#CBA6F7;">
+              "Destiny isn't gift wrap. You gotta rip it open."
+            </div>
+          </div>
+        </div>
+
+        <!-- Velvet Witch -->
+        <div class="char-card reveal reveal-delay-2">
+          <img class="char-card-img" src="characters/happy.webp" alt="Velvet Witch">
+          <div class="char-card-body">
+            <h3 style="color:#E040FB;">Velvet Witch</h3>
+            <div class="role" style="color:#E040FB;">Elegant Sorceress</div>
+            <p>Graceful yet piercing. She wraps sharp insights in velvet words with poetic precision.</p>
+            <div class="quote" style="background:rgba(224,64,251,0.06); color:#E040FB;">
+              "What the cards whisper... you already know, darling."
+            </div>
+          </div>
+        </div>
+
+        <!-- Chaos Agent -->
+        <div class="char-card reveal reveal-delay-3">
+          <img class="char-card-img" src="characters/dramatic.webp" alt="Chaos Agent">
+          <div class="char-card-body">
+            <h3 style="color:#00E5FF;">Chaos Agent</h3>
+            <div class="role" style="color:#00E5FF;">Cosmic Trickster</div>
+            <p>Cosmic humor meets wild perspective. Why take fate seriously when the universe is laughing?</p>
+            <div class="quote" style="background:rgba(0,229,255,0.06); color:#00E5FF;">
+              "The universe sent you a meme. Wanna read it?"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Webtoon Cutscene Demo ═══════ -->
+  <section class="cutscene-demo" id="webtoon">
+    <div class="container">
+      <div class="section-label reveal">K-Webtoon Reading</div>
+      <h2 class="section-title reveal">Fortune in Speech Bubbles</h2>
+      <p class="section-desc reveal">No more walls of text. Your oracle speaks to you frame by frame, with emotions and personality.</p>
+
+      <div class="cutscene-layout">
+        <!-- Phone mockup -->
+        <div class="cutscene-phone reveal" onclick="skipTyping()" style="cursor:pointer;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="cutscene-frame">
+              <div class="cutscene-char-row">
+                <img class="cutscene-avatar" src="characters/default.webp" alt="Oracle avatar">
+                <div>
+                  <div class="cutscene-name">The Oracle</div>
+                  <div class="cutscene-emotion">Emotion: serious</div>
+                </div>
+                <div style="margin-left:auto; padding:3px 10px; border-radius:8px; background:rgba(203,166,247,0.1); font-size:11px; color:var(--accent);">1/3</div>
+              </div>
+              <div class="cutscene-bubble" id="phoneBubble" style="cursor:pointer;" onclick="skipTyping()">
+                <span id="phone-typed"></span><span class="typing-cursor" id="typingCursor"></span>
+              </div>
+              <div class="cutscene-tap">tap anywhere to skip</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="reveal">
+          <ul class="cutscene-features">
+            <li>
+              <div class="feat-icon"><span class="material-icons-round">touch_app</span></div>
+              <div class="feat-text">
+                <h4>Tap to Advance</h4>
+                <p>Progress through your reading one frame at a time. Typing animation brings each card to life.</p>
+              </div>
+            </li>
+            <li>
+              <div class="feat-icon"><span class="material-icons-round">face</span></div>
+              <div class="feat-text">
+                <h4>Character Expressions</h4>
+                <p>The oracle's face changes based on card meanings &mdash; happy, serious, mysterious, dramatic.</p>
+              </div>
+            </li>
+            <li>
+              <div class="feat-icon"><span class="material-icons-round">share</span></div>
+              <div class="feat-text">
+                <h4>Share Cards</h4>
+                <p>Save your reading as a 1080&times;1920 image with three color themes. Built for social sharing.</p>
+              </div>
+            </li>
+            <li>
+              <div class="feat-icon"><span class="material-icons-round">record_voice_over</span></div>
+              <div class="feat-text">
+                <h4>Three Voices, One Deck</h4>
+                <p>Switch personas anytime. The same card tells completely different stories.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Services ═══════ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-label reveal">Services</div>
+      <h2 class="section-title reveal">Readings Made for You</h2>
+      <p class="section-desc reveal">Four AI-powered reading services, each delivered as an immersive webtoon cutscene.</p>
+
+      <div class="services-grid">
+        <div class="service-card reveal" style="--glow: #CBA6F7;">
+          <div class="service-icon" style="background: rgba(203,166,247,0.1);">
+            <span class="material-icons-round" style="color:#CBA6F7;">style</span>
+          </div>
+          <h3>Tarot Reading</h3>
+          <p>Full 78-card Rider-Waite deck. Four spreads &mdash; quick pull, three-card, love, and career.</p>
+          <span class="service-tag" style="background:rgba(203,166,247,0.1); color:#CBA6F7;">Quick &middot; 3 Cards &middot; Love &middot; Career</span>
+        </div>
+        <div class="service-card reveal" style="--glow: #E040FB;">
+          <div class="service-icon" style="background: rgba(224,64,251,0.1);">
+            <span class="material-icons-round" style="color:#E040FB;">auto_awesome</span>
+          </div>
+          <h3>Daily Fortune</h3>
+          <p>A fresh reading every day with lucky items and personalized guidance for your morning.</p>
+          <span class="service-tag" style="background:rgba(224,64,251,0.1); color:#E040FB;">Daily &middot; Lucky Items</span>
+        </div>
+        <div class="service-card reveal" style="--glow: #00E5FF;">
+          <div class="service-icon" style="background: rgba(0,229,255,0.1);">
+            <span class="material-icons-round" style="color:#00E5FF;">fingerprint</span>
+          </div>
+          <h3>AI Palm Reading</h3>
+          <p>Snap your palm &mdash; Vision AI analyzes life line, heart line, and head line instantly.</p>
+          <span class="service-tag" style="background:rgba(0,229,255,0.1); color:#00E5FF;">Camera &middot; Vision AI</span>
+        </div>
+        <div class="service-card reveal" style="--glow: #FFB74D;">
+          <div class="service-icon" style="background: rgba(255,183,77,0.1);">
+            <span class="material-icons-round" style="color:#FFB74D;">psychology</span>
+          </div>
+          <h3>Elemental Profile</h3>
+          <p>Discover your elemental makeup, personality, and life rhythm from your birth date.</p>
+          <span class="service-tag" style="background:rgba(255,183,77,0.1); color:#FFB74D;">Four Pillars &middot; Elements</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ How It Works ═══════ -->
+  <section class="how-it-works" id="how">
+    <div class="container">
+      <div class="section-label reveal">How It Works</div>
+      <h2 class="section-title reveal">Simple as Moonlight</h2>
+      <p class="section-desc reveal">Your reading in four steps.</p>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">1</div>
+          <span class="material-icons-round">person</span>
+          <h4>Choose Your Oracle</h4>
+          <p>Pick from The Oracle, Velvet Witch, or Chaos Agent.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">2</div>
+          <span class="material-icons-round">category</span>
+          <h4>Select a Reading</h4>
+          <p>Tarot, palm, daily fortune, or elemental profile.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">3</div>
+          <span class="material-icons-round">auto_stories</span>
+          <h4>Watch the Story</h4>
+          <p>Your oracle delivers results in webtoon cutscenes.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">4</div>
+          <span class="material-icons-round">ios_share</span>
+          <h4>Save & Share</h4>
+          <p>Export as a share card for social media.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Languages ═══════ -->
+  <section class="languages">
+    <div class="container">
+      <div class="section-label reveal">Global</div>
+      <h2 class="section-title reveal">Available Worldwide</h2>
+      <p class="section-desc reveal" style="margin:0 auto;">Born in Korea, built for the world. Fully localized in 12 languages.</p>
+      <div class="lang-grid reveal">
+        <div class="lang-chip active">English</div>
+        <div class="lang-chip">Korean</div>
+        <div class="lang-chip">Japanese</div>
+        <div class="lang-chip">Chinese</div>
+        <div class="lang-chip">Spanish</div>
+        <div class="lang-chip">Portuguese</div>
+        <div class="lang-chip">French</div>
+        <div class="lang-chip">German</div>
+        <div class="lang-chip">Vietnamese</div>
+        <div class="lang-chip">Thai</div>
+        <div class="lang-chip">Indonesian</div>
+        <div class="lang-chip">Arabic</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ CTA with Character ═══════ -->
+  <section class="cta-section" id="download">
+    <div class="container">
+      <div class="cta-character reveal">
+        <img src="characters/greeting.webp" alt="Oracle greeting" style="max-height:280px;">
+      </div>
+      <div class="section-label reveal">Download</div>
+      <h2 class="section-title reveal">Step Into the Moonlight</h2>
+      <p class="section-desc reveal">Start your first reading for free. Your oracle is waiting.</p>
+      <div class="hero-buttons reveal" style="justify-content:center;">
+        <a href="#" class="btn-primary" style="padding: 16px 40px; font-size: 16px;">
+          <span class="material-icons-round" style="font-size:22px;">android</span>
+          Google Play
+        </a>
+        <a href="#" class="btn-secondary" style="padding: 16px 40px; font-size: 16px;">
+          <span class="material-icons-round" style="font-size:22px;">apple</span>
+          App Store
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">MOONLIT ORACLE</div>
+    <p>&copy; 2026 Hundred Core. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+      <li><a href="mailto:osu355@gmail.com">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Stars
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
+      s.style.setProperty('--max-o', (0.3 + Math.random() * 0.7).toFixed(2));
+      s.style.animationDelay = (Math.random() * 4) + 's';
+      if (Math.random() > 0.7) {
+        s.style.width = '3px'; s.style.height = '3px';
+        s.style.boxShadow = '0 0 4px rgba(203,166,247,0.3)';
+      }
+      starsEl.appendChild(s);
+    }
+
+    // Scroll Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Hero persona switcher ──
+    const personas = ['oracle', 'witch', 'chaos'];
+    let currentPersonaIdx = 0;
+    let autoCycleTimer = null;
+
+    let userHasTouched = false;
+
+    function setPersona(persona) {
+      document.getElementById('heroBgGlow').setAttribute('data-persona', persona);
+      document.querySelectorAll('.char-select-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.persona === persona);
+      });
+      currentPersonaIdx = personas.indexOf(persona);
+    }
+
+    // Auto-cycle: 5s interval, touch devices only, STOPS permanently on first user tap
+    function autoCycle() {
+      if (userHasTouched) { clearInterval(autoCycleTimer); return; }
+      currentPersonaIdx = (currentPersonaIdx + 1) % personas.length;
+      setPersona(personas[currentPersonaIdx]);
+    }
+    function startAutoCycle() {
+      if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        autoCycleTimer = setInterval(autoCycle, 5000);
+      }
+    }
+    startAutoCycle();
+
+    // Any touch on hero kills auto-cycle forever
+    document.querySelector('.hero').addEventListener('touchstart', function() {
+      userHasTouched = true;
+      clearInterval(autoCycleTimer);
+    }, { once: true });
+
+    // ── Phone typing effect with SKIP ──
+    const phrases = [
+      "This card is speaking... you're at a crossroads right now.",
+      "The Tower \u2014 sometimes things must fall before they rise.",
+      "Don't be afraid. The change has already begun.",
+      "I see fire in your past and water in your future...",
+    ];
+    const typedEl = document.getElementById('phone-typed');
+    const cursorEl = document.getElementById('typingCursor');
+    let phraseIdx = 0, charIdx = 0, deleting = false, typeTimer = null;
+    let isTypingNow = false;
+
+    function skipTyping() {
+      if (isTypingNow && !deleting) {
+        // Skip: show full text immediately
+        clearTimeout(typeTimer);
+        const phrase = phrases[phraseIdx];
+        charIdx = phrase.length;
+        typedEl.textContent = phrase;
+        isTypingNow = false;
+        cursorEl.style.display = 'none';
+        // Wait then start deleting
+        typeTimer = setTimeout(() => {
+          cursorEl.style.display = '';
+          deleting = true;
+          type();
+        }, 2400);
+      }
+    }
+
+    function type() {
+      const phrase = phrases[phraseIdx];
+      if (!deleting) {
+        isTypingNow = true;
+        charIdx++;
+        typedEl.textContent = phrase.substring(0, charIdx);
+        if (charIdx === phrase.length) {
+          isTypingNow = false;
+          cursorEl.style.display = 'none';
+          typeTimer = setTimeout(() => { cursorEl.style.display = ''; deleting = true; type(); }, 2400);
+          return;
+        }
+        typeTimer = setTimeout(type, 35);
+      } else {
+        isTypingNow = false;
+        charIdx--;
+        typedEl.textContent = phrase.substring(0, charIdx);
+        if (charIdx === 0) {
+          deleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          typeTimer = setTimeout(type, 500);
+          return;
+        }
+        typeTimer = setTimeout(type, 18);
+      }
+    }
+    type();
+  </script>
+</body>
+</html>
