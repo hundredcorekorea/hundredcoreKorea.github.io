@@ -3,107 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hundred Core Korea - 이용약관</title>
+    <title>이용약관 — Hundred Core</title>
+    <meta name="description" content="Hundred Core 이용약관. Moonlit Oracle, NyanQuest 등 모든 서비스의 이용 규칙 및 조건 안내입니다.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #6366f1;
+            --accent: #10b981;
+            --bg: #0a0a1a;
+            --bg-card: rgba(255,255,255,0.04);
+            --text: #f1f5f9;
+            --text-2: rgba(255,255,255,0.7);
+            --text-3: rgba(255,255,255,0.45);
+            --border: rgba(255,255,255,0.08);
+            --border-2: rgba(255,255,255,0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
-            background-color: #f5f5f5;
+            font-family: 'Inter', -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
-        .container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(10,10,26,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
         }
-        h1 { color: #2c3e50; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
-        h2 { color: #34495e; margin-top: 30px; }
-        .updated { color: #7f8c8d; font-size: 0.9em; margin-bottom: 30px; }
-        ul { margin: 10px 0; padding-left: 20px; }
-        li { margin: 8px 0; }
-        .contact { background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-top: 30px; }
-        a { color: #667eea; }
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px; height: 64px;
+        }
+        .nav-logo {
+            font-weight: 700; font-size: 1.15rem;
+            display: flex; align-items: center; gap: 8px;
+            color: var(--text); text-decoration: none;
+        }
+        .nav-logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            font-size: 0.9rem; color: var(--text-2);
+            font-weight: 500; text-decoration: none;
+        }
+        .nav-links a:hover { color: var(--primary); text-decoration: none; }
+        .lang-switch {
+            font-size: 0.8rem; padding: 4px 12px; border-radius: 6px;
+            background: rgba(255,255,255,0.06); color: var(--text-3);
+            border: 1px solid var(--border);
+        }
+        .lang-switch:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+        .content {
+            max-width: 800px; margin: 0 auto;
+            padding: 120px 24px 80px;
+        }
+        .content h1 {
+            font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800;
+            margin-bottom: 8px; line-height: 1.3;
+        }
+        .last-updated {
+            font-size: 0.9rem; color: var(--text-3); margin-bottom: 48px;
+        }
+        .content h2 {
+            font-size: 1.4rem; font-weight: 700;
+            margin-top: 48px; margin-bottom: 16px;
+            color: var(--text);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            margin-top: 32px; margin-bottom: 12px;
+            color: var(--text-2);
+        }
+        .content p {
+            color: var(--text-2); margin-bottom: 16px;
+            line-height: 1.8;
+        }
+        .content ul, .content ol {
+            color: var(--text-2); margin-bottom: 16px;
+            padding-left: 24px; line-height: 1.8;
+        }
+        .content li { margin-bottom: 8px; }
+        .content strong { color: var(--text); }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+        }
+        .footer-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-size: 0.9rem; color: var(--text-3); text-decoration: none; }
+        .footer-links a:hover { color: var(--text); text-decoration: none; }
+        .copyright { font-size: 0.85rem; color: var(--text-3); }
+
+        @media (max-width: 768px) {
+            .content { padding: 100px 16px 64px; }
+            .footer-inner { flex-direction: column; }
+            .nav-links { gap: 16px; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hundred Core Korea - 이용약관</h1>
-        <p class="updated">최종 업데이트: 2025년 1월 23일</p>
 
-        <h2>제1조 (목적)</h2>
-        <p>이 약관은 Hundred Core Korea(이하 "회사")가 제공하는 모바일 애플리케이션 서비스(이하 "서비스")의 이용조건 및 절차, 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
-
-        <h2>제2조 (적용 대상)</h2>
-        <p>이 약관은 회사가 제공하는 모든 앱에 적용됩니다:</p>
-        <ul>
-            <li>월세장부</li>
-            <li>드림플로우</li>
-            <li>신간요정</li>
-            <li>술래</li>
-            <li>약속시간</li>
-            <li>Mission 100 시리즈</li>
-        </ul>
-
-        <h2>제3조 (서비스의 제공)</h2>
-        <p>회사는 다음과 같은 서비스를 제공합니다:</p>
-        <ul>
-            <li>각 앱의 고유 기능</li>
-            <li>데이터 저장 및 동기화 (선택적)</li>
-            <li>프리미엄 기능 (유료)</li>
-        </ul>
-
-        <h2>제4조 (서비스 이용)</h2>
-        <ul>
-            <li>서비스는 만 13세 이상 이용 가능합니다.</li>
-            <li>불법적인 목적으로 서비스를 이용할 수 없습니다.</li>
-            <li>타인의 권리를 침해하는 행위를 금지합니다.</li>
-        </ul>
-
-        <h2>제5조 (유료 서비스)</h2>
-        <ul>
-            <li>프리미엄 구독은 Google Play를 통해 결제됩니다.</li>
-            <li>환불은 Google Play 정책을 따릅니다.</li>
-            <li>구독 취소는 Google Play에서 가능합니다.</li>
-        </ul>
-
-        <h2>제6조 (면책)</h2>
-        <ul>
-            <li>서비스는 "있는 그대로" 제공됩니다.</li>
-            <li>데이터 손실에 대한 책임은 제한됩니다.</li>
-            <li>앱의 정보는 참고용이며, 전문적인 조언을 대체하지 않습니다.</li>
-            <li><strong>약속시간 앱 관련:</strong> 약 복용 알림은 보조 수단이며, 의료적 조언을 대체하지 않습니다. 정확한 복용 지침은 의사 또는 약사의 안내를 따르세요.</li>
-        </ul>
-
-        <h2>제6-2조 (가족 공유 기능)</h2>
-        <p>약속시간 앱의 가족 공유 기능 사용 시:</p>
-        <ul>
-            <li>복용 정보는 등록된 가족 구성원에게만 공유됩니다.</li>
-            <li>초대 코드는 신뢰할 수 있는 가족에게만 공유해주세요.</li>
-            <li>언제든지 가족 그룹에서 탈퇴할 수 있습니다.</li>
-        </ul>
-
-        <h2>제7조 (지적재산권)</h2>
-        <p>서비스에 포함된 모든 콘텐츠의 저작권은 회사에 귀속됩니다.</p>
-
-        <h2>제8조 (약관 변경)</h2>
-        <p>약관 변경 시 앱 업데이트 또는 공지를 통해 안내합니다.</p>
-
-        <h2>제9조 (문의)</h2>
-        <div class="contact">
-            <p><strong>이메일:</strong> osu355@gmail.com</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/hundredcodeKorea">https://github.com/hundredcodeKorea</a></p>
-        </div>
-
-        <hr style="margin: 40px 0; border: none; border-top: 1px solid #e0e0e0;">
-
-        <div style="text-align: center; color: #7f8c8d; font-size: 0.9em;">
-            <p><strong>Hundred Core Korea</strong></p>
-            <p>© 2025 All rights reserved.</p>
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo"><span>HC</span> Hundred Core</a>
+        <div class="nav-links">
+            <a href="/">홈</a>
+            <a href="/privacy.html">개인정보처리방침</a>
+            <a href="/en/terms.html" class="lang-switch">EN</a>
         </div>
     </div>
+</nav>
+
+<main class="content">
+    <h1>이용약관</h1>
+    <p class="last-updated">최종 수정일: 2026년 3월 23일</p>
+
+    <p>Hundred Core(이하 "회사")가 운영하는 웹사이트, 애플리케이션 및 서비스(이하 통칭 "서비스")의 이용약관(이하 "약관")에 오신 것을 환영합니다. 본 약관은 다음 서비스에 적용됩니다:</p>
+    <ul>
+        <li><strong>Moonlit Oracle</strong> (moonlitoracle.com) — AI 타로 및 운세 서비스</li>
+        <li><strong>NyanQuest</strong> (nyanquest.com) — AI 테이블탑 롤플레잉 게임</li>
+        <li><strong>기타 모바일 애플리케이션</strong> — Hundred Core가 출시한 앱</li>
+    </ul>
+    <p>서비스에 접속하거나 이용함으로써 본 약관에 동의하시게 됩니다. 동의하지 않으시면 서비스를 이용하지 마세요.</p>
+
+    <h2>1. 이용 자격</h2>
+    <p>서비스를 이용하려면 만 14세 이상이어야 합니다 (또는 해당 관할권의 최소 연령 요건 충족). 서비스를 이용함으로써 이 요건을 충족함을 확인합니다. 만 18세 미만인 경우 부모 또는 보호자의 동의가 필요합니다.</p>
+
+    <h2>2. 계정 등록</h2>
+    <ul>
+        <li>특정 기능에 접근하려면 계정을 생성해야 할 수 있습니다.</li>
+        <li>계정 자격 증명의 기밀 유지는 이용자의 책임입니다.</li>
+        <li>등록 시 정확하고 최신의 정보를 제공하는 데 동의합니다.</li>
+        <li>계정에서 발생하는 모든 활동에 대한 책임은 이용자에게 있습니다.</li>
+        <li>계정의 무단 사용을 인지한 경우 즉시 회사에 알려야 합니다.</li>
+    </ul>
+
+    <h2>3. AI 생성 콘텐츠</h2>
+    <p>당사 서비스는 인공지능을 활용하여 콘텐츠를 생성합니다. 이용자는 다음 사항을 인지하고 동의합니다:</p>
+    <ul>
+        <li><strong>오락 목적:</strong> 모든 AI 생성 콘텐츠(타로 리딩, 운세 해석, TRPG 내러티브 등)는 오락 목적으로만 제공됩니다.</li>
+        <li><strong>전문 조언 아님:</strong> AI 생성 콘텐츠는 의료, 금융, 법률, 심리 또는 기타 전문적인 조언에 해당하지 않습니다. AI 생성 콘텐츠만을 근거로 중요한 인생 결정을 내리지 마세요.</li>
+        <li><strong>정확성 미보장:</strong> AI 모델은 부정확하거나 불완전하거나 예상치 못한 콘텐츠를 생성할 수 있습니다. AI 생성 출력의 정확성, 신뢰성 또는 적절성을 보장하지 않습니다.</li>
+        <li><strong>AI 표시:</strong> 서비스 내 AI 생성 콘텐츠는 AI 기본법 등 관련 법률에 따라 AI 생성임이 표시됩니다.</li>
+        <li><strong>이용자 입력:</strong> AI 기능에 제공하는 콘텐츠에 대한 책임은 이용자에게 있습니다. 불법적이거나 유해하거나 민감한 개인정보를 입력하지 마세요.</li>
+    </ul>
+
+    <h2>4. 금지 행위</h2>
+    <p>이용자는 다음 행위를 해서는 안 됩니다:</p>
+    <ul>
+        <li>불법적인 목적이나 관련 법률을 위반하여 서비스를 이용하는 행위</li>
+        <li>시스템이나 다른 이용자의 계정에 무단 접근을 시도하는 행위</li>
+        <li>서비스의 무결성이나 성능을 방해하거나 중단시키는 행위</li>
+        <li>바이러스, 악성 코드 또는 기타 유해한 코드를 업로드하거나 전송하는 행위</li>
+        <li>허가 없이 자동화된 수단으로 서비스에 접근하는 행위 (스크래핑, 크롤링 등)</li>
+        <li>다른 이용자를 괴롭히거나 학대하거나 해를 끼치는 행위</li>
+        <li>불법적이거나 명예를 훼손하거나 타인의 권리를 침해하는 콘텐츠를 생성하는 데 서비스를 이용하는 행위</li>
+        <li>서비스의 일부를 역공학, 디컴파일 또는 역어셈블하는 행위</li>
+        <li>허가 없이 서비스나 AI 생성 콘텐츠를 상업적 목적으로 재판매하거나 재배포하는 행위</li>
+        <li>이용 제한, 콘텐츠 필터 또는 안전 메커니즘을 우회하려는 행위</li>
+    </ul>
+
+    <h2>5. 유료 서비스 및 결제</h2>
+
+    <h3>5.1 프리미엄 서비스</h3>
+    <p>일부 기능은 유료 구독이 필요합니다. 가격과 기능은 서비스별로 다르며 구매 시점에 표시됩니다.</p>
+
+    <h3>5.2 결제 처리</h3>
+    <p>결제는 Lemon Squeezy 또는 Apple(App Store), Google(Google Play)에서 제공하는 인앱 결제를 통해 처리됩니다. 모든 거래는 해당 결제 처리업체의 약관에 따릅니다.</p>
+
+    <h3>5.3 구독 갱신</h3>
+    <p>구독은 갱신일 전에 취소하지 않는 한 각 청구 기간 종료 시 자동으로 갱신됩니다. 계정 설정 또는 해당 앱 스토어를 통해 구독을 관리하거나 취소할 수 있습니다.</p>
+
+    <h3>5.4 환불</h3>
+    <p>환불 가능 여부는 구매한 결제 플랫폼에 따라 결정됩니다:</p>
+    <ul>
+        <li><strong>App Store / Google Play:</strong> Apple 또는 Google의 환불 정책에 따릅니다.</li>
+        <li><strong>웹 구매 (Lemon Squeezy):</strong> 구매 후 7일 이내에 문의하여 환불을 요청할 수 있습니다. 환불은 회사의 재량에 따라 제공됩니다.</li>
+    </ul>
+
+    <h2>6. 지적재산권</h2>
+
+    <h3>6.1 회사의 콘텐츠</h3>
+    <p>서비스의 모든 콘텐츠, 기능 및 기능성(텍스트, 그래픽, 로고, 아이콘, 이미지, 소프트웨어, 디자인 등)은 Hundred Core의 소유이며 지적재산권법에 의해 보호됩니다. 서면 허가 없이 복사, 수정, 배포하거나 2차 저작물을 만들 수 없습니다.</p>
+
+    <h3>6.2 이용자의 콘텐츠</h3>
+    <p>서비스를 통해 생성하거나 제공한 콘텐츠의 소유권은 이용자에게 있습니다. 콘텐츠를 제출함으로써 서비스 제공 목적으로 해당 콘텐츠를 이용, 저장, 처리할 수 있는 비독점적, 전 세계적, 무상의 라이선스를 회사에 부여합니다.</p>
+
+    <h3>6.3 AI 생성 출력물</h3>
+    <p>이용자의 입력에 대한 응답으로 생성된 AI 콘텐츠는 개인적, 비상업적 목적으로 사용할 수 있습니다. 법률에 의해 공개가 요구되는 경우 AI 생성 출력물을 순전히 인간이 만든 작품으로 주장할 수 없습니다.</p>
+
+    <h2>7. 개인정보 보호</h2>
+    <p>서비스 이용은 <a href="/privacy.html">개인정보처리방침</a>에도 적용되며, 개인정보의 수집, 이용 및 보호 방법을 설명합니다.</p>
+
+    <h2>8. 면책 조항</h2>
+    <p>서비스는 명시적이든 묵시적이든 어떠한 종류의 보증 없이 "있는 그대로" 및 "이용 가능한 상태로" 제공됩니다. 여기에는 상품성, 특정 목적에의 적합성 및 비침해에 대한 묵시적 보증이 포함되나 이에 한정되지 않습니다.</p>
+    <p>회사는 다음을 보증하지 않습니다:</p>
+    <ul>
+        <li>서비스가 중단 없이, 오류 없이, 안전하게 운영될 것</li>
+        <li>AI 생성 콘텐츠가 정확하고 완전하며 적절할 것</li>
+        <li>결함이 적시에 수정될 것</li>
+        <li>서비스가 이용자의 특정 요구 사항을 충족할 것</li>
+    </ul>
+
+    <h2>9. 책임 제한</h2>
+    <p>법이 허용하는 최대 범위 내에서, Hundred Core는 서비스 이용과 관련하여 발생하는 간접적, 부수적, 특별, 결과적 또는 징벌적 손해(이익, 데이터 또는 영업권 손실 포함)에 대해 책임을 지지 않습니다.</p>
+    <p>본 약관 또는 서비스와 관련된 모든 청구에 대한 회사의 총 책임은 청구 전 12개월 동안 이용자가 회사에 지불한 금액 또는 100,000원 중 큰 금액을 초과하지 않습니다.</p>
+
+    <h2>10. 면책</h2>
+    <p>이용자는 서비스 이용, 본 약관 위반 또는 제3자의 권리 침해로 인해 발생하는 모든 청구, 책임, 손해, 손실 또는 비용(합리적인 법률 비용 포함)으로부터 Hundred Core, 임원, 이사, 직원 및 대리인을 면책하고 방어하는 데 동의합니다.</p>
+
+    <h2>11. 서비스 이용 해지</h2>
+    <ul>
+        <li>이용자는 언제든지 서비스 이용을 중단하고 문의를 통해 계정 삭제를 요청할 수 있습니다.</li>
+        <li>회사는 사유 유무에 관계없이, 통지 유무에 관계없이 언제든지 서비스 접근을 중단하거나 해지할 수 있습니다.</li>
+        <li>해지 시 서비스 이용 권리는 즉시 소멸됩니다. 성격상 해지 후에도 유효해야 하는 조항(6조, 8조, 9조, 10조, 13조 포함)은 존속합니다.</li>
+    </ul>
+
+    <h2>12. 약관의 변경</h2>
+    <p>회사는 언제든지 본 약관을 수정할 권리를 보유합니다. 중요한 변경 사항이 있을 경우 웹사이트에 업데이트된 약관을 게시하고 "최종 수정일"을 갱신하여 알려드리겠습니다. 변경 후 서비스를 계속 이용하시면 개정된 약관에 동의하신 것으로 간주됩니다.</p>
+
+    <h2>13. 준거법 및 분쟁 해결</h2>
+    <p>본 약관은 대한민국 법률에 따라 규율되고 해석됩니다. 본 약관과 관련하여 발생하는 모든 분쟁은 대한민국 서울의 법원의 전속 관할에 따릅니다.</p>
+
+    <h2>14. 일반 조항</h2>
+    <ul>
+        <li><strong>완전 합의:</strong> 본 약관은 개인정보처리방침과 함께 서비스에 관한 이용자와 Hundred Core 간의 완전한 합의를 구성합니다.</li>
+        <li><strong>가분성:</strong> 본 약관의 일부 조항이 집행 불가능한 것으로 판명되더라도 나머지 조항은 계속 유효합니다.</li>
+        <li><strong>권리 불포기:</strong> 회사가 본 약관의 조항을 집행하지 않더라도 해당 조항의 포기로 간주되지 않습니다.</li>
+        <li><strong>양도:</strong> 이용자는 회사의 사전 서면 동의 없이 본 약관에 따른 권리를 양도할 수 없습니다. 회사는 제한 없이 권리를 양도할 수 있습니다.</li>
+    </ul>
+
+    <h2>15. 문의처</h2>
+    <p>본 약관에 대한 질문이 있으시면 아래로 연락해 주세요:</p>
+    <ul>
+        <li><strong>회사명:</strong> Hundred Core</li>
+        <li><strong>이메일:</strong> <a href="mailto:osu355@gmail.com">osu355@gmail.com</a></li>
+        <li><strong>소재지:</strong> 대한민국 서울특별시</li>
+    </ul>
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-links">
+            <a href="/">홈</a>
+            <a href="/privacy.html">개인정보처리방침</a>
+            <a href="/terms.html">이용약관</a>
+            <a href="mailto:osu355@gmail.com">문의</a>
+        </div>
+        <p class="copyright">&copy; 2026 Hundred Core. All rights reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>
