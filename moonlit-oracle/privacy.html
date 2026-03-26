@@ -51,7 +51,7 @@
   <div class="container">
     <a href="index.html" class="back-link">&larr; Back to Moonlit Oracle</a>
     <h1>Privacy Policy</h1>
-    <p class="last-updated">Last updated: March 11, 2026</p>
+    <p class="last-updated">Last updated: March 26, 2026</p>
 
     <p>Hundred Core ("we," "us," or "our") operates the Moonlit Oracle mobile application (the "App"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our App. Please read this policy carefully. By using the App, you agree to the practices described herein.</p>
 
@@ -59,9 +59,11 @@
 
     <h3>1.1 Information You Provide</h3>
     <ul>
-      <li><strong>Birth Date & Time</strong> — Used solely for elemental profile (Four Pillars) readings. Stored locally on your device only.</li>
+      <li><strong>Google Account (Optional)</strong> — If you sign in with Google via Hundred Core unified account, we collect your email address and display name for cross-app account linking and cloud backup. Stored securely in Firebase Authentication and Firestore.</li>
+      <li><strong>Birth Date & Time</strong> — Used solely for elemental profile (Four Pillars / Saju) readings. Stored locally on your device and optionally backed up to your cloud account.</li>
       <li><strong>Palm Images</strong> — Camera photos submitted for AI palm reading. Processed in real-time via a third-party AI API and <strong>never stored on our servers</strong>. Images are discarded immediately after the reading is generated.</li>
-      <li><strong>Persona Preferences</strong> — Your selected AI persona (Nox, Selene, or Nova). Stored locally on your device.</li>
+      <li><strong>Persona Preferences</strong> — Your selected AI persona (Nox the Oracle, Selene the Velvet Witch, or Nova the Cosmic Chaos Agent). Stored locally on your device.</li>
+      <li><strong>Reading History</strong> — Past tarot readings and fortune results. Stored locally and optionally synced to your cloud account for cross-device access.</li>
     </ul>
 
     <h3>1.2 Information Collected Automatically</h3>
@@ -73,16 +75,19 @@
 
     <h3>1.3 Information We Do NOT Collect</h3>
     <ul>
-      <li>Real names, email addresses, or phone numbers (no account registration required)</li>
       <li>Location data (GPS, IP-based geolocation)</li>
       <li>Contacts, call logs, or messages</li>
       <li>Financial or payment information (handled entirely by Google Play / Apple App Store)</li>
+      <li>Biometric data (palm images are processed in-memory only, not stored)</li>
     </ul>
+    <p><strong>Note:</strong> Account registration is optional. The App can be used fully without signing in. If you choose to sign in with Google, only the email address associated with your Google account is collected for account linking purposes.</p>
 
     <h2>2. How We Use Your Information</h2>
     <table>
       <tr><th>Purpose</th><th>Data Used</th><th>Legal Basis</th></tr>
       <tr><td>Generate fortune readings</td><td>Birth date, palm image</td><td>Performance of service</td></tr>
+      <tr><td>Hundred Core unified account</td><td>Google email (optional)</td><td>Consent</td></tr>
+      <tr><td>Cloud backup & cross-device sync</td><td>Reading history, preferences</td><td>Consent</td></tr>
       <tr><td>Save preferences locally</td><td>Persona selection, settings</td><td>Legitimate interest</td></tr>
       <tr><td>Improve the App</td><td>Usage analytics (aggregated)</td><td>Legitimate interest</td></tr>
       <tr><td>Display advertisements</td><td>Advertising ID</td><td>Consent (where required)</td></tr>
@@ -96,17 +101,20 @@
     <h2>4. Third-Party Services</h2>
     <p>We use the following third-party services that may collect information:</p>
     <ul>
-      <li><strong>Firebase Analytics &amp; Crashlytics</strong> (Google LLC) — App analytics and crash reporting. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy Policy</a></li>
-      <li><strong>Google AdMob</strong> (Google LLC) — Advertisement delivery. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
-      <li><strong>OpenRouter / AI API Providers</strong> — AI model inference for generating readings. Only the text of your query (not personal identifiers) is sent to AI providers. <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener">OpenRouter Privacy Policy</a></li>
+      <li><strong>Firebase Authentication</strong> (Google LLC) — Google Sign-In for Hundred Core unified account. Collects email and display name upon user consent. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy Policy</a></li>
+      <li><strong>Firebase Firestore</strong> (Google LLC) — Cloud storage for account-linked reading history and preferences backup.</li>
+      <li><strong>Firebase Analytics &amp; Crashlytics</strong> (Google LLC) — App analytics and crash reporting.</li>
       <li><strong>Firebase Remote Config</strong> (Google LLC) — App configuration management. No personal data is transmitted.</li>
+      <li><strong>Google AdMob</strong> (Google LLC) — Advertisement delivery. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+      <li><strong>OpenRouter / AI API Providers</strong> — AI model inference for generating readings (Gemini 2.0 Flash primary, Claude Haiku/Sonnet fallback). Only the text of your query (not personal identifiers) is sent to AI providers. <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener">OpenRouter Privacy Policy</a></li>
     </ul>
 
     <h2>5. Data Storage & Security</h2>
     <ul>
-      <li><strong>Local Storage</strong> — Birth date, persona preferences, and reading history are stored exclusively on your device using encrypted local storage (Hive). We have no access to this data.</li>
-      <li><strong>No Server-Side Storage</strong> — We do not operate user databases. No personal data is stored on our servers.</li>
-      <li><strong>Transmission Security</strong> — All data transmitted to third-party AI services uses HTTPS/TLS encryption.</li>
+      <li><strong>Local Storage</strong> — Birth date, persona preferences, and reading history are stored on your device using encrypted local storage (Hive).</li>
+      <li><strong>Cloud Storage (Optional)</strong> — If you sign in with a Hundred Core unified account, your reading history and preferences may be backed up to Firebase Firestore for cross-device sync. This data is associated with your account email and secured by Firebase security rules.</li>
+      <li><strong>Transmission Security</strong> — All data transmitted to Firebase and third-party AI services uses HTTPS/TLS encryption.</li>
+      <li><strong>Share Card</strong> — When you share a reading result, the App generates a static image (1080×1920) containing only the reading summary and your selected persona. No personal information is included in shared images.</li>
     </ul>
 
     <h2>6. Data Retention</h2>
