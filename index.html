@@ -65,6 +65,72 @@
         a { color: inherit; text-decoration: none; }
         code, pre { font-family: 'JetBrains Mono', monospace; }
 
+        /* ─── Reduced motion 존중 — 과도한 애니메이션 가드 ─── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ─── Animations ─── */
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 16px rgba(99,102,241,0.6); transform: scale(1); }
+            50% { box-shadow: 0 0 24px rgba(99,102,241,0.95), 0 0 40px rgba(139,92,246,0.5); transform: scale(1.15); }
+        }
+        @keyframes aurora-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            50% { transform: translate(8%, 4%) scale(1.1); opacity: 0.85; }
+        }
+        @keyframes aurora-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            50% { transform: translate(-6%, 6%) scale(1.15); opacity: 0.75; }
+        }
+        @keyframes aurora-3 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            50% { transform: translate(4%, -5%) scale(1.05); opacity: 0.65; }
+        }
+        @keyframes shine {
+            0% { transform: translateX(-120%) skewX(-20deg); }
+            100% { transform: translateX(220%) skewX(-20deg); }
+        }
+        @keyframes float-up {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-glow {
+            0%, 100% { box-shadow: 0 0 0 1px var(--border), 0 8px 24px rgba(0,0,0,0); }
+            50% { box-shadow: 0 0 0 1px rgba(99,102,241,0.3), 0 12px 40px rgba(99,102,241,0.15); }
+        }
+
+        /* Reveal on scroll — IntersectionObserver 와 연동 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal-stagger.in > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-stagger.in > *:nth-child(1) { transition-delay: 0ms; }
+        .reveal-stagger.in > *:nth-child(2) { transition-delay: 80ms; }
+        .reveal-stagger.in > *:nth-child(3) { transition-delay: 160ms; }
+        .reveal-stagger.in > *:nth-child(4) { transition-delay: 240ms; }
+        .reveal-stagger.in > *:nth-child(5) { transition-delay: 320ms; }
+        .reveal-stagger.in > *:nth-child(6) { transition-delay: 400ms; }
+
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             background: rgba(10,10,20,0.85);
@@ -84,6 +150,7 @@
             width: 10px; height: 10px; border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--accent-2));
             box-shadow: 0 0 16px rgba(99,102,241,0.6);
+            animation: pulse-dot 2.4s ease-in-out infinite;
         }
         .nav-links { display: flex; gap: 28px; }
         .nav-links a {
@@ -121,10 +188,38 @@
         .hero {
             min-height: 92vh; display: flex; align-items: center;
             padding-top: 120px; padding-bottom: 80px;
-            background:
-                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(99,102,241,0.18), transparent 60%),
-                radial-gradient(ellipse 60% 50% at 90% 30%, rgba(139,92,246,0.12), transparent 60%),
-                radial-gradient(ellipse 70% 50% at 50% 100%, rgba(212,165,116,0.08), transparent 60%);
+            position: relative; overflow: hidden;
+        }
+        .hero::before, .hero::after, .hero-aurora {
+            content: ""; position: absolute; pointer-events: none;
+            border-radius: 50%; filter: blur(80px);
+            will-change: transform, opacity;
+        }
+        .hero::before {
+            top: -20%; left: -10%; width: 70%; height: 80%;
+            background: radial-gradient(ellipse at center, rgba(99,102,241,0.32), transparent 65%);
+            animation: aurora-1 14s ease-in-out infinite;
+        }
+        .hero::after {
+            top: 10%; right: -10%; width: 60%; height: 70%;
+            background: radial-gradient(ellipse at center, rgba(139,92,246,0.24), transparent 65%);
+            animation: aurora-2 18s ease-in-out infinite;
+        }
+        .hero-aurora {
+            bottom: -20%; left: 30%; width: 50%; height: 60%;
+            background: radial-gradient(ellipse at center, rgba(212,165,116,0.18), transparent 65%);
+            animation: aurora-3 20s ease-in-out infinite;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        /* Subtle grid overlay */
+        .hero-grid {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 80%);
         }
         .hero-eyebrow {
             display: inline-flex; align-items: center; gap: 8px;
@@ -157,12 +252,21 @@
             display: inline-flex; align-items: center; gap: 8px;
             padding: 14px 26px; border-radius: 12px;
             font-size: 0.95rem; font-weight: 600; transition: all 0.25s; cursor: pointer;
+            position: relative; overflow: hidden; border: none;
         }
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--accent-2));
             color: white; box-shadow: 0 4px 24px rgba(99,102,241,0.3);
         }
+        .btn-primary::before {
+            content: ""; position: absolute; top: 0; left: 0;
+            width: 40%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: translateX(-120%) skewX(-20deg);
+            pointer-events: none;
+        }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(99,102,241,0.5); }
+        .btn-primary:hover::before { animation: shine 0.8s ease-out; }
         .btn-secondary {
             background: var(--bg-card); color: var(--text); border: 1px solid var(--border-2);
         }
@@ -171,8 +275,17 @@
             display: grid; grid-template-columns: repeat(4, 1fr);
             gap: 24px; padding-top: 40px; border-top: 1px solid var(--border);
         }
-        .hero-stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); }
+        .hero-stat-num {
+            font-size: 2rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, #f5d4a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
         .hero-stat-label { font-size: 0.85rem; color: var(--text-3); }
+        .hero-stats > div { transition: transform 0.3s ease; }
+        .hero-stats > div:hover { transform: translateY(-3px); }
         @media (max-width: 768px) {
             .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
         }
@@ -189,9 +302,14 @@
             transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
         }
         .solution-card:hover {
-            border-color: var(--border-2); background: var(--bg-card-hover); transform: translateY(-4px);
+            border-color: rgba(99,102,241,0.35);
+            background: var(--bg-card-hover);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(99,102,241,0.15), 0 0 0 1px rgba(99,102,241,0.2);
         }
         .solution-card:hover::before { transform: scaleX(1); }
+        .solution-card:hover .solution-icon { transform: scale(1.15) rotate(-4deg); }
+        .solution-icon { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .solution-icon { font-size: 2rem; margin-bottom: 16px; display: inline-block; }
         .solution-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
         .solution-tag {
@@ -221,7 +339,15 @@
             background: var(--bg-card); border: 1px solid var(--border);
             transition: all 0.3s;
         }
-        .case-card:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+        .case-card {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .case-card:hover {
+            border-color: rgba(212,165,116,0.4);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(212,165,116,0.1);
+        }
         .case-card h4 { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
         .case-tag { font-size: 0.78rem; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
         .case-features { list-style: none; margin-bottom: 18px; }
@@ -258,8 +384,13 @@
             transition: all 0.25s; text-align: center;
         }
         .portfolio-card:hover {
-            background: var(--bg-card-hover); border-color: var(--border-2); transform: translateY(-2px);
+            background: var(--bg-card-hover);
+            border-color: rgba(99,102,241,0.4);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.15);
         }
+        .portfolio-card img { transition: transform 0.3s ease; }
+        .portfolio-card:hover img { transform: scale(1.08) rotate(-2deg); }
         .portfolio-card img { width: 56px; height: 56px; border-radius: 12px; margin-bottom: 10px; }
         .portfolio-card h6 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .portfolio-card p { font-size: 0.78rem; color: var(--text-3); }
@@ -398,6 +529,8 @@
 </nav>
 
 <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-aurora"></div>
     <div class="container">
         <div class="hero-eyebrow">B2B AI 자동화 솔루션 · 일반과세자 (735-69-00608)</div>
         <h1>
@@ -431,7 +564,7 @@
             세금계산서 발행 가능 (일반과세자), 30% 선급 / 70% 완료 결제.
         </p>
 
-        <div class="solutions-grid">
+        <div class="solutions-grid reveal-stagger reveal">
             <div class="solution-card">
                 <div class="solution-icon">📝</div>
                 <span class="solution-tag">SOLUTION 01</span>
@@ -585,7 +718,7 @@
         <h2 class="section-title">실제 운영 중인 시스템 — 데모로 검증</h2>
         <p class="section-desc">모든 솔루션은 Hundred Core가 자체 운영 중. 회사 deploy 전 데모로 직접 검증 가능.</p>
 
-        <div class="cases-grid">
+        <div class="cases-grid reveal-stagger reveal">
             <div class="case-card">
                 <h4>Moonlit Oracle</h4>
                 <div class="case-tag">결제 funnel + AI 영상 통합</div>
@@ -634,7 +767,7 @@
         <h2 class="section-title">검증된 기술 조합</h2>
         <p class="section-desc">모든 솔루션이 같은 stack 기반. 유지보수·이전 비용 최소화.</p>
 
-        <div class="stack-grid">
+        <div class="stack-grid reveal-stagger reveal">
             <div class="stack-cat"><h5>Frontend</h5><ul><li>Next.js 16</li><li>React 19</li><li>Tailwind 4</li><li>TypeScript</li></ul></div>
             <div class="stack-cat"><h5>Backend</h5><ul><li>Supabase (Auth + DB + Storage)</li><li>Vercel Edge Functions</li><li>GitHub Actions cron</li><li>Resend (이메일)</li></ul></div>
             <div class="stack-cat"><h5>AI / ML</h5><ul><li>fal.ai (Seedance, Kling, FLUX, SeedVR2)</li><li>OpenRouter (Claude, Gemini)</li><li>ElevenLabs (TTS)</li><li>flux-lora-portrait-trainer</li></ul></div>
@@ -651,7 +784,7 @@
         <h2 class="section-title">계약 → Deploy까지 4단계</h2>
         <p class="section-desc">평균 4-12주. 30% 선급 / 70% 완료 결제 표준. 진행 중 weekly 진척도 보고.</p>
 
-        <div class="process-grid">
+        <div class="process-grid reveal-stagger reveal">
             <div class="process-card"><div class="process-num">01</div><h4>요구사항 미팅</h4><p>1-2시간 무료 상담. 회사 도메인·예산·일정 파악 → 솔루션 매칭.</p></div>
             <div class="process-card"><div class="process-num">02</div><h4>견적·계약</h4><p>견적서 1-3일 내 발송. 계약서 + NDA + 30% 선급 → 착수.</p></div>
             <div class="process-card"><div class="process-num">03</div><h4>Deploy</h4><p>2-8주. 우리 코드 fork → 회사 브랜딩·도메인 적용 → staging → production.</p></div>
@@ -666,7 +799,7 @@
         <h2 class="section-title">Active 앱 4종</h2>
         <p class="section-desc">모두 Hundred Core 자체 개발·운영. Play Store 또는 웹에서 직접 검증 가능.</p>
 
-        <div class="portfolio-grid">
+        <div class="portfolio-grid reveal-stagger reveal">
             <a href="https://moonlitoracle.com" target="_blank" rel="noopener" class="portfolio-card">
                 <img src="/icons/moonlit-oracle.png" alt="Moonlit Oracle" onerror="this.style.display='none'">
                 <h6>Moonlit Oracle</h6><p>K-사주 글로벌 웹</p>
@@ -696,7 +829,7 @@
             세금계산서 발행 가능 (일반과세자).
         </p>
 
-        <div class="contact-card">
+        <div class="contact-card reveal">
             <div>
                 <h3>1-2주 내 deploy 시작</h3>
                 <p>아래 폼을 채우시면 1-3일 내 답변 + 견적서 발송. 사전 미팅 1-2시간 무료. NDA 즉시 체결 가능.</p>
@@ -756,6 +889,65 @@
 </section>
 
 <script>
+    // ── Reveal on scroll (IntersectionObserver) ──
+    (function() {
+        if (!('IntersectionObserver' in window)) return;
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => obs.observe(el));
+    })();
+
+    // ── Hero stat count-up ──
+    (function() {
+        const stats = document.querySelectorAll('.hero-stat-num');
+        if (!stats.length) return;
+        // 페이지 로드 직후 부드럽게 애니메이션
+        stats.forEach((el) => {
+            const finalText = el.textContent;
+            // 숫자 패턴 찾기 (예: "4종", "37/37", "1-2주", "₩1,500만~")
+            const match = finalText.match(/^(.*?)(\d+(?:[./,]\d+)*)(.*)$/);
+            if (!match) return;
+            const prefix = match[1];
+            const numStr = match[2];
+            const suffix = match[3];
+            // 슬래시·쉼표 포함된 복잡한 숫자는 단순 fade-in만
+            if (numStr.includes('/') || numStr.includes(',')) {
+                el.style.opacity = 0;
+                requestAnimationFrame(() => {
+                    el.style.transition = 'opacity 0.8s ease-out';
+                    el.style.opacity = 1;
+                });
+                return;
+            }
+            const target = parseFloat(numStr);
+            if (isNaN(target)) return;
+            const duration = 1200;
+            const start = performance.now();
+            function tick(now) {
+                const t = Math.min(1, (now - start) / duration);
+                const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+                const cur = (target * eased).toFixed(numStr.includes('.') ? 1 : 0);
+                el.textContent = prefix + cur + suffix;
+                if (t < 1) requestAnimationFrame(tick);
+                else el.textContent = finalText;
+            }
+            // hero가 뷰포트에 보이면 시작
+            const heroObs = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    requestAnimationFrame(tick);
+                    heroObs.disconnect();
+                }
+            }, { threshold: 0.3 });
+            heroObs.observe(el);
+        });
+    })();
+
     function submitContact(event) {
         event.preventDefault();
         const form = document.getElementById('contactForm');
