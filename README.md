@@ -4,15 +4,16 @@ AI 자동화 풀스택 솔루션 — 1인 개발사. Next.js · Supabase · fal.
 
 🌐 <https://hundredcorekorea.github.io>
 
-## 솔루션
+## 솔루션 (첫 3건 reference 가격 — 신규 사업자 시작 단가)
 
 | # | 솔루션 | 시작 단가 | 월 운영 |
 | --- | --- | ---: | ---: |
-| 01 | AI 블로그 자동화 (한/영 12 posts/day) | ₩1,500만 | ₩50-100만 |
-| 02 | AI 영상 파이프라인 (Seedance + Kling + ElevenLabs) | ₩2,000만 | ₩100-200만 |
-| 03 | 결제 funnel + 회원 인증 (Next.js + Supabase + Ko-fi/Toss) | ₩3,000만 | 별도 |
-| 04 | AI 캐릭터 LoRA + 시트 (3 페르소나 패턴) | ₩500-1,500만 | — |
-| 05 | AI 자동화 컨설팅 | ₩40만/h | — |
+| 01 | AI 블로그 자동화 (한/영 12 posts/day) | ₩400만~ | ₩30-60만 |
+| 02 | AI 영상 파이프라인 (Seedance + Kling + ElevenLabs) | ₩600만~ | ₩50-100만 |
+| 03 | 결제 funnel + 회원 인증 (Next.js + Supabase + Ko-fi/Toss) | ₩800만~ | 별도 |
+| 04 | AI 캐릭터 LoRA + 시트 (3 페르소나 패턴) | ₩150-400만 | — |
+| 05 | AI 자동화 컨설팅 | ₩20만/h | — |
+| ★ | 묶음 (영상 + 블로그) | ₩900만~ | — |
 
 ## 사례 (자체 운영 검증 시스템)
 
