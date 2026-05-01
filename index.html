@@ -193,7 +193,187 @@
         }
         .hero .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1240px;
+        }
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 56px;
+        }
+        @media (max-width: 980px) {
+            .hero-layout { grid-template-columns: 1fr; gap: 48px; }
+            .hero-visual { order: -1; min-height: 320px; }
+        }
+
+        /* ─── Floating Mockup Cards ─── */
+        .hero-visual {
+            position: relative;
+            min-height: 480px;
+            perspective: 1200px;
+        }
+        .float-card {
+            position: absolute;
+            border-radius: 16px;
+            background: linear-gradient(140deg, rgba(20,20,36,0.95), rgba(15,15,28,0.92));
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.5),
+                0 8px 24px rgba(99,102,241,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px);
+            overflow: hidden;
+            will-change: transform;
+        }
+        .float-card-head {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.3);
+        }
+        .float-card-dots { display: flex; gap: 5px; }
+        .float-card-dots span {
+            width: 9px; height: 9px; border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+        }
+        .float-card-dots span:nth-child(1) { background: #ef4444; }
+        .float-card-dots span:nth-child(2) { background: #f59e0b; }
+        .float-card-dots span:nth-child(3) { background: #10b981; }
+        .float-card-url {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem; color: var(--text-3);
+            margin-left: 6px;
+        }
+        .float-card-body { padding: 16px; }
+
+        /* Card 1 — Moonlit Oracle (top-left, large) */
+        .float-card-1 {
+            top: 0; left: 0;
+            width: 78%;
+            --r: -4deg;
+            transform: rotate(var(--r));
+            animation: float-y-1 9s ease-in-out infinite;
+            z-index: 2;
+        }
+        .moonlit-mock {
+            min-height: 220px;
+            background:
+                radial-gradient(ellipse 60% 50% at 30% 20%, rgba(139,92,246,0.35), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(212,165,116,0.2), transparent 60%),
+                linear-gradient(160deg, #1a1230, #0f0a1f);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex; flex-direction: column; gap: 10px;
+            position: relative; overflow: hidden;
+        }
+        .moonlit-mock::before {
+            content: ""; position: absolute;
+            top: 16px; right: 16px;
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #f5d4a0, #d4a574 40%, #8b5cf6);
+            box-shadow: 0 0 30px rgba(212,165,116,0.4);
+        }
+        .moonlit-mock h5 {
+            font-size: 0.78rem; font-weight: 700;
+            color: var(--accent); letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .moonlit-mock h4 {
+            font-size: 1.1rem; font-weight: 800; color: white;
+            line-height: 1.3; max-width: 70%;
+        }
+        .moonlit-bar {
+            margin-top: auto;
+            display: flex; gap: 6px;
+        }
+        .moonlit-bar span {
+            height: 6px; border-radius: 3px;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent));
+        }
+        .moonlit-bar span:nth-child(1) { width: 52%; }
+        .moonlit-bar span:nth-child(2) { width: 28%; opacity: 0.5; }
+        .moonlit-bar span:nth-child(3) { width: 14%; opacity: 0.25; }
+
+        /* Card 2 — Blog Autopilot (right-middle) */
+        .float-card-2 {
+            top: 110px; right: 0;
+            width: 60%;
+            --r: 5deg;
+            transform: rotate(var(--r));
+            animation: float-y-2 11s ease-in-out infinite;
+            z-index: 3;
+        }
+        .blog-mock { padding: 4px 0 0; }
+        .blog-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 12px; margin: 0 -4px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .blog-row:hover { background: rgba(255,255,255,0.04); }
+        .blog-thumb {
+            width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+        }
+        .blog-thumb-1 { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .blog-thumb-2 { background: linear-gradient(135deg, #d4a574, #f5d4a0); }
+        .blog-thumb-3 { background: linear-gradient(135deg, #10b981, #6366f1); }
+        .blog-text { flex: 1; min-width: 0; }
+        .blog-title {
+            font-size: 0.78rem; font-weight: 600; color: var(--text);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .blog-meta {
+            font-size: 0.66rem; color: var(--text-3);
+            margin-top: 3px; font-family: 'JetBrains Mono', monospace;
+        }
+        .blog-tag {
+            font-size: 0.62rem; padding: 2px 7px; border-radius: 4px;
+            background: rgba(99,102,241,0.18); color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Card 3 — Apps Stat (bottom-left) */
+        .float-card-3 {
+            bottom: 0; left: 16px;
+            width: 56%;
+            --r: -3deg;
+            transform: rotate(var(--r));
+            animation: float-y-3 10s ease-in-out infinite;
+            z-index: 4;
+        }
+        .apps-mock { padding: 4px 0; }
+        .apps-stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.06);
+        }
+        .apps-stat-row:last-child { border-bottom: 0; }
+        .apps-stat-name {
+            font-size: 0.78rem; font-weight: 600; color: var(--text);
+        }
+        .apps-stat-status {
+            font-size: 0.65rem; padding: 2px 8px; border-radius: 999px;
+            background: rgba(16,185,129,0.15); color: #34d399;
+            font-weight: 600; letter-spacing: 0.3px;
+        }
+        .apps-stat-meta {
+            font-size: 0.65rem; color: var(--text-3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        @keyframes float-y-1 {
+            0%, 100% { transform: rotate(-4deg) translateY(0); }
+            50% { transform: rotate(-4deg) translateY(-10px); }
+        }
+        @keyframes float-y-2 {
+            0%, 100% { transform: rotate(5deg) translateY(0); }
+            50% { transform: rotate(5deg) translateY(-14px); }
+        }
+        @keyframes float-y-3 {
+            0%, 100% { transform: rotate(-3deg) translateY(0); }
+            50% { transform: rotate(-3deg) translateY(-8px); }
         }
         .hero::before, .hero::after, .hero-aurora {
             content: ""; position: absolute; pointer-events: none;
@@ -537,20 +717,111 @@
     <div class="hero-grid"></div>
     <div class="hero-aurora"></div>
     <div class="container">
-        <div class="hero-eyebrow">B2B AI 자동화 솔루션 · 일반과세자 (735-69-00608)</div>
-        <h1>
-            <span class="gradient">AI 자동화 풀스택</span><br>
-            솔루션, 1-2주 안에 deploy
-        </h1>
-        <p class="hero-sub">
-            우리가 이미 만들어 운영 중인 시스템을 <strong style="color:var(--accent)">귀사 브랜드로 그대로 옮겨드립니다.</strong>
-            AI 블로그 자동 발행·AI 영상 자동 생성·결제 시스템 — 대형 SI가 3-6개월 걸릴 작업을
-            <strong style="color:var(--accent)">1-2주 안에</strong>. 기술 용어 몰라도 됩니다.
-        </p>
-        <div class="hero-actions">
-            <a href="#solutions" class="btn btn-primary">솔루션 보기 →</a>
-            <a href="#contact" class="btn btn-secondary">📞 문의·견적 요청</a>
+        <div class="hero-layout">
+            <!-- LEFT — Floating Mockup Cards -->
+            <div class="hero-visual" aria-hidden="true">
+
+                <!-- Card 1: Moonlit Oracle -->
+                <div class="float-card float-card-1">
+                    <div class="float-card-head">
+                        <div class="float-card-dots"><span></span><span></span><span></span></div>
+                        <span class="float-card-url">moonlitoracle.com</span>
+                    </div>
+                    <div class="float-card-body">
+                        <div class="moonlit-mock">
+                            <h5>Korean Saju · 사례 #1</h5>
+                            <h4>당신의 운명을<br>14챕터로 풀어드립니다</h4>
+                            <div class="moonlit-bar"><span></span><span></span><span></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Blog Autopilot -->
+                <div class="float-card float-card-2">
+                    <div class="float-card-head">
+                        <div class="float-card-dots"><span></span><span></span><span></span></div>
+                        <span class="float-card-url">blog · cron</span>
+                    </div>
+                    <div class="float-card-body blog-mock">
+                        <div class="blog-row">
+                            <div class="blog-thumb blog-thumb-1"></div>
+                            <div class="blog-text">
+                                <div class="blog-title">2026 보험 가입 가이드 — 핵심 5가지</div>
+                                <div class="blog-meta">07:00 · 한국어 · 발행 완료</div>
+                            </div>
+                            <span class="blog-tag">AUTO</span>
+                        </div>
+                        <div class="blog-row">
+                            <div class="blog-thumb blog-thumb-2"></div>
+                            <div class="blog-text">
+                                <div class="blog-title">Best Health Insurance Plans 2026</div>
+                                <div class="blog-meta">08:00 · English · published</div>
+                            </div>
+                            <span class="blog-tag">AUTO</span>
+                        </div>
+                        <div class="blog-row">
+                            <div class="blog-thumb blog-thumb-3"></div>
+                            <div class="blog-text">
+                                <div class="blog-title">월세 계약 시 체크리스트 7개</div>
+                                <div class="blog-meta">09:00 · 한국어 · 발행 완료</div>
+                            </div>
+                            <span class="blog-tag">AUTO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Apps Status -->
+                <div class="float-card float-card-3">
+                    <div class="float-card-head">
+                        <div class="float-card-dots"><span></span><span></span><span></span></div>
+                        <span class="float-card-url">apps · status</span>
+                    </div>
+                    <div class="float-card-body apps-mock">
+                        <div class="apps-stat-row">
+                            <div>
+                                <div class="apps-stat-name">로또비서</div>
+                                <div class="apps-stat-meta">Play Store · KR</div>
+                            </div>
+                            <span class="apps-stat-status">● ACTIVE</span>
+                        </div>
+                        <div class="apps-stat-row">
+                            <div>
+                                <div class="apps-stat-name">드림플로우</div>
+                                <div class="apps-stat-meta">Play Store · KR</div>
+                            </div>
+                            <span class="apps-stat-status">● ACTIVE</span>
+                        </div>
+                        <div class="apps-stat-row">
+                            <div>
+                                <div class="apps-stat-name">Moonlit Oracle</div>
+                                <div class="apps-stat-meta">Web · global</div>
+                            </div>
+                            <span class="apps-stat-status">● ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT — Hero Content -->
+            <div class="hero-content">
+                <div class="hero-eyebrow">B2B AI 자동화 솔루션 · 일반과세자 (735-69-00608)</div>
+                <h1>
+                    <span class="gradient">AI 자동화 풀스택</span><br>
+                    솔루션, 1-2주 안에 deploy
+                </h1>
+                <p class="hero-sub">
+                    우리가 이미 만들어 운영 중인 시스템을 <strong style="color:var(--accent)">귀사 브랜드로 그대로 옮겨드립니다.</strong>
+                    AI 블로그 자동 발행·AI 영상 자동 생성·결제 시스템 — 대형 SI가 3-6개월 걸릴 작업을
+                    <strong style="color:var(--accent)">1-2주 안에</strong>. 기술 용어 몰라도 됩니다.
+                </p>
+                <div class="hero-actions">
+                    <a href="#solutions" class="btn btn-primary">솔루션 보기 →</a>
+                    <a href="#contact" class="btn btn-secondary">📞 문의·견적 요청</a>
+                </div>
+            </div>
         </div>
+
+        <!-- Stats Full Width -->
         <div class="hero-stats">
             <div><div class="hero-stat-num">4종</div><div class="hero-stat-label">Active 앱 운영 중</div></div>
             <div><div class="hero-stat-num">37/37</div><div class="hero-stat-label">보안 단위 테스트 PASS</div></div>
