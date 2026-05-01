@@ -16,9 +16,9 @@ AI 자동화 풀스택 솔루션 — 1인 개발사. Next.js · Supabase · fal.
 
 ## 사례 (자체 운영 검증 시스템)
 
-- **Moonlit Oracle** (<https://moonlitoracle.com>) — 결제 funnel + AI 영상 통합
+- **Moonlit Oracle** (<https://moonlitoracle.com>) — 결제 funnel + AI 영상 통합 (11명)
 - **Blog Autopilot** (<https://reafdev.blogspot.com>) — 매일 12 포스트 자동 발행
-- **로또비서·냥퀘스트·만약에로또** 외 12+ 앱 운영
+- **Active 앱 5종**: 로또비서 (223) / 드림플로우 (22) / Moonlit Oracle (11) / 퀀트로또 / 냥퀘스트
 
 ## 사업자 정보
 
@@ -27,7 +27,7 @@ AI 자동화 풀스택 솔루션 — 1인 개발사. Next.js · Supabase · fal.
 - **사업자등록번호**: 735-69-00608
 - **유형**: 일반과세자 (세금계산서 발행 가능)
 - **업종**: 정보통신업 (응용 SW 개발 및 공급업)
-- **주소**: 서울특별시 성북구 고려대로7다길 38
+- **주소**: 서울특별시 성북구 고려대로7다길
 - **개업일**: 2025-11-11
 - **이메일**: <osu355@gmail.com>
 
