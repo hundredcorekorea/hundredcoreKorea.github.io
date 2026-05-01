@@ -283,27 +283,72 @@
         @media (max-width: 900px) { .process-grid { grid-template-columns: repeat(2, 1fr); } }
 
         .contact-card {
-            padding: 48px; border-radius: 20px;
+            padding: 40px; border-radius: 20px;
             background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.04));
             border: 1px solid rgba(99,102,241,0.2);
-            display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
         }
-        .contact-card h3 { font-size: 1.7rem; font-weight: 800; margin-bottom: 12px; }
-        .contact-card p { color: var(--text-2); margin-bottom: 24px; }
+        .contact-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
+        .contact-card p { color: var(--text-2); margin-bottom: 20px; font-size: 0.95rem; }
         .contact-list { list-style: none; }
         .contact-list li {
             display: flex; align-items: center; gap: 14px;
-            padding: 12px 0; border-top: 1px solid var(--border); font-size: 0.95rem;
+            padding: 10px 0; border-top: 1px solid var(--border); font-size: 0.92rem;
         }
-        .contact-list li:first-child { border-top: 0; }
-        .contact-list .label { color: var(--text-3); font-size: 0.82rem; min-width: 90px; }
+        .contact-list li:first-child { border-top: 0; padding-top: 0; }
+        .contact-list .label { color: var(--text-3); font-size: 0.78rem; min-width: 78px; }
         .contact-list .val {
             color: var(--text); font-weight: 500;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.86rem;
         }
         .contact-list a.val { color: var(--primary); }
+
+        /* Contact Form */
+        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .field { display: flex; flex-direction: column; gap: 6px; }
+        .field label {
+            font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .field label .req { color: #ef4444; }
+        .field input, .field textarea, .field select {
+            padding: 11px 14px; border-radius: 10px;
+            background: rgba(0,0,0,0.25); color: var(--text);
+            border: 1px solid var(--border-2); font-size: 0.92rem;
+            font-family: inherit; outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            border-color: var(--primary);
+            background: rgba(0,0,0,0.4);
+        }
+        .field textarea { resize: vertical; min-height: 96px; }
+        .form-status {
+            display: none; padding: 10px 14px; border-radius: 8px;
+            font-size: 0.85rem; margin-top: -4px;
+        }
+        .form-status.ok {
+            display: block;
+            background: rgba(16,185,129,0.12);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #34d399;
+        }
+        .form-status.err {
+            display: block;
+            background: rgba(239,68,68,0.12);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #f87171;
+        }
+        .form-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .form-hint {
+            font-size: 0.78rem; color: var(--text-3);
+            padding-top: 8px;
+        }
+
         @media (max-width: 768px) {
-            .contact-card { grid-template-columns: 1fr; padding: 32px 24px; gap: 24px; }
+            .contact-card { grid-template-columns: 1fr; padding: 28px 20px; gap: 24px; }
+            .field-row { grid-template-columns: 1fr; }
         }
 
         footer {
@@ -343,9 +388,9 @@
         <a href="#" class="nav-logo"><span class="dot"></span> Hundred Core</a>
         <div class="nav-links">
             <a href="#solutions">솔루션</a>
+            <a href="#why">차별점</a>
             <a href="#cases">사례</a>
             <a href="#process">프로세스</a>
-            <a href="#portfolio">포트폴리오</a>
             <a href="#contact">문의</a>
         </div>
         <a href="#contact" class="nav-cta">문의하기</a>
@@ -400,7 +445,7 @@
                 </ul>
                 <div class="solution-price">
                     <div class="solution-price-main">₩1,500만~</div>
-                    <div class="solution-price-sub">개발 일회성 / 월 운영 ₩50-100만</div>
+                    <div class="solution-price-sub">무상 AS 3개월 포함 · 월 운영 ₩50-100만 (선택)</div>
                 </div>
             </div>
 
@@ -417,7 +462,7 @@
                 </ul>
                 <div class="solution-price">
                     <div class="solution-price-main">₩2,000만~</div>
-                    <div class="solution-price-sub">개발 일회성 / 월 운영 ₩100-200만</div>
+                    <div class="solution-price-sub">무상 AS 3개월 포함 · 월 운영 ₩100-200만 (선택)</div>
                 </div>
             </div>
 
@@ -434,7 +479,7 @@
                 </ul>
                 <div class="solution-price">
                     <div class="solution-price-main">₩3,000만~</div>
-                    <div class="solution-price-sub">개발 일회성 / 운영 별도</div>
+                    <div class="solution-price-sub">무상 AS 6개월 포함 · 운영 별도 (결제 시스템 안정 보장)</div>
                 </div>
             </div>
 
@@ -451,7 +496,7 @@
                 </ul>
                 <div class="solution-price">
                     <div class="solution-price-main">₩500-1,500만</div>
-                    <div class="solution-price-sub">캐릭터당 일회성</div>
+                    <div class="solution-price-sub">무상 AS 1개월 · 캐릭터당 영구 사용권</div>
                 </div>
             </div>
 
@@ -462,8 +507,73 @@
                 <p class="solution-desc">기존 시스템 진단 / 최적화 / 마이그레이션 / 비용 절감. fal.ai 비용 30% 절감, OpenRouter 모델 라우팅, Supabase RLS 강화 등.</p>
                 <div class="solution-price">
                     <div class="solution-price-main">₩40만 / 시간</div>
-                    <div class="solution-price-sub">최소 4시간 단위 / 월 단위 retainer 가능</div>
+                    <div class="solution-price-sub">최소 4시간 단위 · 월 단위 retainer 가능</div>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════ WHY US ═══════════════════ -->
+<section id="why" style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);">
+    <div class="container">
+        <div class="section-label">Why Hundred Core</div>
+        <h2 class="section-title">대형 SI보다 빠르게, 프리랜서보다 안전하게</h2>
+        <p class="section-desc">
+            법인 신뢰도 + 개인 속도 + 검증된 코드 자산. 5가지 보장으로 차별화.
+        </p>
+
+        <div class="solutions-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+            <div class="solution-card">
+                <div class="solution-icon">🛠</div>
+                <h3>무상 AS 1-6개월</h3>
+                <p class="solution-desc">
+                    Deploy 후 솔루션별 1-6개월 무상 유지보수. 버그 수정·성능 튜닝·보안 패치 모두 포함.
+                    한국 SI 표준(1-2개월) 대비 최대 3배 길게.
+                </p>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-icon">🔓</div>
+                <h3>소스 코드 100% 인계</h3>
+                <p class="solution-desc">
+                    완료 시 GitHub 또는 zip으로 전체 소스 + 운영 가이드 인계. 락인 X — 직접 운영 또는 다른 개발자 인계 자유.
+                </p>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-icon">📞</div>
+                <h3>사전 미팅 무료 1-2h</h3>
+                <p class="solution-desc">
+                    요구사항·예산·일정 무료 상담. 솔루션 매칭 + 견적 가이드. NDA 필요 시 즉시 체결.
+                </p>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-icon">🧾</div>
+                <h3>법인 거래 완비</h3>
+                <p class="solution-desc">
+                    일반과세자 (735-69-00608), 세금계산서 발행 가능. 30% 선급 / 70% 완료 한국 SI 표준 결제.
+                    표준 도급 계약서 제공.
+                </p>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-icon">⚡</div>
+                <h3>1-2주 fast deploy</h3>
+                <p class="solution-desc">
+                    검증된 코드 fork → 회사 브랜딩·도메인 적용. 대형 SI 3-6개월 작업이 1-2주에 가능.
+                    실제 운영 사례 (Moonlit Oracle 등) 그대로 데모.
+                </p>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-icon">🔒</div>
+                <h3>보안 검증 완료</h3>
+                <p class="solution-desc">
+                    XSS · CSP · Zod 입력 검증 · Supabase RLS · RPC audit log · 에러 메시지 일반화.
+                    단위 테스트 37/37 PASS. 모든 솔루션에 동일 보안 적용.
+                </p>
             </div>
         </div>
     </div>
@@ -589,21 +699,115 @@
         <div class="contact-card">
             <div>
                 <h3>1-2주 내 deploy 시작</h3>
-                <p>AI 자동화·결제 funnel·블로그 시스템 — 견적 무료, 계약 후 30% 선급으로 즉시 착수. 기술 미팅 1-2시간 무료.</p>
-                <a href="mailto:osu355@gmail.com?subject=%5BHundred%20Core%5D%20%EC%86%94%EB%A3%A8%EC%85%98%20%EB%AC%B8%EC%9D%98" class="btn btn-primary">📧 osu355@gmail.com 문의</a>
+                <p>아래 폼을 채우시면 1-3일 내 답변 + 견적서 발송. 사전 미팅 1-2시간 무료. NDA 즉시 체결 가능.</p>
+
+                <form class="contact-form" id="contactForm" onsubmit="return submitContact(event)">
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="cf-name">이름 <span class="req">*</span></label>
+                            <input type="text" id="cf-name" name="name" required maxlength="40" autocomplete="name">
+                        </div>
+                        <div class="field">
+                            <label for="cf-company">회사명</label>
+                            <input type="text" id="cf-company" name="company" maxlength="60" autocomplete="organization">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="cf-email">이메일 <span class="req">*</span></label>
+                        <input type="email" id="cf-email" name="email" required maxlength="80" autocomplete="email">
+                    </div>
+                    <div class="field">
+                        <label for="cf-solution">관심 솔루션</label>
+                        <select id="cf-solution" name="solution">
+                            <option value="">선택 안 함</option>
+                            <option value="01_blog">01 — AI 블로그 자동화 (₩1,500만~)</option>
+                            <option value="02_video">02 — AI 영상 파이프라인 (₩2,000만~)</option>
+                            <option value="03_funnel">03 — 결제 funnel + 회원 인증 (₩3,000만~)</option>
+                            <option value="04_lora">04 — AI 캐릭터 LoRA + 시트 (₩500-1,500만)</option>
+                            <option value="05_consulting">05 — 컨설팅 (₩40만/h)</option>
+                            <option value="other">기타 / 복합</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="cf-message">문의 내용 <span class="req">*</span></label>
+                        <textarea id="cf-message" name="message" required maxlength="2000" placeholder="예산·일정·요구사항을 적어주시면 더 정확한 견적이 가능합니다."></textarea>
+                    </div>
+                    <div id="cf-status" class="form-status"></div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">📧 문의 보내기</button>
+                        <span class="form-hint">전송 시 osu355@gmail.com으로 직접 발송됩니다.</span>
+                    </div>
+                </form>
             </div>
             <ul class="contact-list">
                 <li><span class="label">법인명</span><span class="val">헌드레드 코어</span></li>
                 <li><span class="label">대표</span><span class="val">김호영</span></li>
                 <li><span class="label">사업자번호</span><span class="val">735-69-00608</span></li>
                 <li><span class="label">유형</span><span class="val">일반과세자</span></li>
+                <li><span class="label">업종</span><span class="val">정보통신업</span></li>
                 <li><span class="label">주소</span><span class="val">서울 성북구 고려대로7다길</span></li>
                 <li><span class="label">이메일</span><a href="mailto:osu355@gmail.com" class="val">osu355@gmail.com</a></li>
                 <li><span class="label">GitHub</span><a href="https://github.com/khy0425" target="_blank" rel="noopener" class="val">@khy0425</a></li>
+                <li><span class="label">결제</span><span class="val">30% 선급 / 70% 완료</span></li>
+                <li><span class="label">AS</span><span class="val">무상 1-6개월 (솔루션별)</span></li>
             </ul>
         </div>
     </div>
 </section>
+
+<script>
+    function submitContact(event) {
+        event.preventDefault();
+        const form = document.getElementById('contactForm');
+        const status = document.getElementById('cf-status');
+        const name = form.name.value.trim();
+        const company = form.company.value.trim();
+        const email = form.email.value.trim();
+        const solution = form.solution.value;
+        const message = form.message.value.trim();
+
+        if (!name || !email || !message) {
+            status.className = 'form-status err';
+            status.textContent = '이름·이메일·문의 내용은 필수입니다.';
+            return false;
+        }
+
+        const solutionLabels = {
+            '01_blog': '01 AI 블로그 자동화',
+            '02_video': '02 AI 영상 파이프라인',
+            '03_funnel': '03 결제 funnel + 회원 인증',
+            '04_lora': '04 AI 캐릭터 LoRA + 시트',
+            '05_consulting': '05 컨설팅',
+            'other': '기타 / 복합',
+        };
+        const solutionLabel = solutionLabels[solution] || '미지정';
+
+        const subject = `[Hundred Core 문의] ${company || name} — ${solutionLabel}`;
+        const body =
+            `이름: ${name}\n` +
+            `회사: ${company || '(미기재)'}\n` +
+            `이메일: ${email}\n` +
+            `관심 솔루션: ${solutionLabel}\n` +
+            `\n` +
+            `─── 문의 내용 ───\n` +
+            `${message}\n` +
+            `\n` +
+            `─── 발송 출처 ───\n` +
+            `https://hundredcorekorea.github.io/#contact`;
+
+        const mailto = `mailto:osu355@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // 새 창 시도 → 실패 시 location 변경
+        const opened = window.open(mailto, '_blank');
+        if (!opened) {
+            window.location.href = mailto;
+        }
+
+        status.className = 'form-status ok';
+        status.textContent = '✅ 메일 클라이언트가 열렸습니다. 메일을 보내주시면 1-3일 내 답변드립니다. 안 열린다면 직접 osu355@gmail.com 으로 보내주세요.';
+        return false;
+    }
+</script>
 
 <footer>
     <div class="footer-inner">
