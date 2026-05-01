@@ -499,6 +499,107 @@
         .solution-card:hover::before { transform: scaleX(1); }
         .solution-card:hover .solution-icon { transform: scale(1.15) rotate(-4deg); }
         .solution-icon { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* ─── Mouse Spotlight (Aceternity·Linear) ─── */
+        .spotlight {
+            position: relative;
+        }
+        .spotlight::after {
+            content: ""; position: absolute; inset: 0;
+            border-radius: inherit; pointer-events: none;
+            background: radial-gradient(
+                360px circle at var(--mx, 50%) var(--my, 50%),
+                rgba(99,102,241,0.18),
+                transparent 50%
+            );
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .spotlight:hover::after { opacity: 1; }
+
+        /* ─── Featured Solution Card (Vercel·Resend) ─── */
+        .solution-card-featured {
+            grid-column: 1 / -1;
+            background:
+                radial-gradient(ellipse 80% 60% at 0% 0%, rgba(99,102,241,0.18), transparent 60%),
+                radial-gradient(ellipse 60% 80% at 100% 100%, rgba(212,165,116,0.12), transparent 60%),
+                linear-gradient(135deg, rgba(20,20,36,0.95), rgba(15,15,28,0.92));
+            border: 1px solid rgba(99,102,241,0.25);
+            display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px;
+            align-items: center; padding: 36px;
+            position: relative; overflow: hidden;
+        }
+        .solution-card-featured::before {
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent-2)) !important;
+            transform: scaleX(1) !important;
+            height: 4px !important;
+        }
+        .solution-card-featured .featured-badge {
+            display: inline-block; padding: 4px 12px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-2));
+            color: white; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 1.5px; margin-bottom: 12px;
+        }
+        .solution-card-featured h3 { font-size: 1.6rem; }
+        .solution-card-featured .featured-stats {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+            padding: 20px; border-radius: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .featured-stat-num {
+            font-size: 1.8rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #f5d4a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .featured-stat-label { font-size: 0.78rem; color: var(--text-3); }
+        @media (max-width: 768px) {
+            .solution-card-featured { grid-template-columns: 1fr; padding: 28px 22px; }
+        }
+
+        /* ─── Tech Stack Marquee (Vercel·Stripe) ─── */
+        .marquee-wrap {
+            margin-top: 32px;
+            position: relative;
+            overflow: hidden;
+            mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+        }
+        .marquee {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            animation: marquee-scroll 50s linear infinite;
+        }
+        .marquee-wrap:hover .marquee { animation-play-state: paused; }
+        .marquee-pill {
+            flex-shrink: 0;
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 22px; border-radius: 999px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.86rem; color: var(--text-2);
+            white-space: nowrap;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .marquee-pill:hover {
+            color: var(--primary);
+            border-color: rgba(99,102,241,0.35);
+        }
+        .marquee-pill .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--primary); flex-shrink: 0;
+        }
+        .marquee-pill .dot.amber { background: var(--accent); }
+        .marquee-pill .dot.violet { background: var(--accent-2); }
+        .marquee-pill .dot.green { background: #10b981; }
+        @keyframes marquee-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
         .solution-icon { font-size: 2rem; margin-bottom: 16px; display: inline-block; }
         .solution-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
         .solution-tag {
@@ -845,7 +946,45 @@
         </p>
 
         <div class="solutions-grid reveal-stagger reveal">
-            <div class="solution-card">
+            <div class="solution-card solution-card-featured spotlight">
+                <div>
+                    <span class="featured-badge">🔥 MOST POPULAR · 02 영상</span>
+                    <h3>AI 영상 자동 생성 + 블로그 자동 발행</h3>
+                    <p class="solution-desc" style="margin-top:12px; max-width:520px;">
+                        Moonlit Oracle에서 검증된 검증된 풀 자동화 패키지. YouTube Shorts·TikTok 영상 + 매일 12 블로그 포스트를
+                        한 번에 deploy. 솔루션 01·02 묶음 할인 가격.
+                    </p>
+                    <ul class="solution-features" style="margin-top: 18px;">
+                        <li>월 영상 30편 + 블로그 360편 자동</li>
+                        <li>한국어·영어 동시 운영 가능</li>
+                        <li>무상 AS 3개월 + 월 운영 retainer 옵션</li>
+                    </ul>
+                    <div class="solution-price" style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 22px;">
+                        <div class="solution-price-main">₩3,200만~</div>
+                        <div class="solution-price-sub">₩3,500만 → ₩3,200만 (묶음 할인 ₩300만)</div>
+                    </div>
+                </div>
+                <div class="featured-stats">
+                    <div>
+                        <div class="featured-stat-num">42</div>
+                        <div class="featured-stat-label">월 자동 콘텐츠</div>
+                    </div>
+                    <div>
+                        <div class="featured-stat-num">1-2주</div>
+                        <div class="featured-stat-label">deploy 기간</div>
+                    </div>
+                    <div>
+                        <div class="featured-stat-num">3개월</div>
+                        <div class="featured-stat-label">무상 AS</div>
+                    </div>
+                    <div>
+                        <div class="featured-stat-num">100%</div>
+                        <div class="featured-stat-label">소스 코드 인계</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-card spotlight">
                 <div class="solution-icon">📝</div>
                 <span class="solution-tag">SOLUTION 01</span>
                 <h3>AI 블로그 자동화</h3>
@@ -862,7 +1001,7 @@
                 </div>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">🎬</div>
                 <span class="solution-tag">SOLUTION 02</span>
                 <h3>AI 영상 자동 생성</h3>
@@ -879,7 +1018,7 @@
                 </div>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">💳</div>
                 <span class="solution-tag">SOLUTION 03</span>
                 <h3>결제 funnel + 회원가입</h3>
@@ -896,7 +1035,7 @@
                 </div>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">🎨</div>
                 <span class="solution-tag">SOLUTION 04</span>
                 <h3>AI 캐릭터 만들기</h3>
@@ -913,7 +1052,7 @@
                 </div>
             </div>
 
-            <div class="solution-card" style="grid-column: 1 / -1;">
+            <div class="solution-card spotlight" style="grid-column: 1 / -1;">
                 <div class="solution-icon">💬</div>
                 <span class="solution-tag">SOLUTION 05</span>
                 <h3>AI 자동화 컨설팅</h3>
@@ -937,7 +1076,7 @@
         </p>
 
         <div class="solutions-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">🛠</div>
                 <h3>무상 AS 1-6개월</h3>
                 <p class="solution-desc">
@@ -946,7 +1085,7 @@
                 </p>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">🔓</div>
                 <h3>소스 코드 100% 드립니다</h3>
                 <p class="solution-desc">
@@ -955,7 +1094,7 @@
                 </p>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">📞</div>
                 <h3>사전 미팅 1-2시간 무료</h3>
                 <p class="solution-desc">
@@ -963,7 +1102,7 @@
                 </p>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">🧾</div>
                 <h3>법인 거래 완비</h3>
                 <p class="solution-desc">
@@ -972,7 +1111,7 @@
                 </p>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">⚡</div>
                 <h3>1-2주 빠른 구축</h3>
                 <p class="solution-desc">
@@ -981,7 +1120,7 @@
                 </p>
             </div>
 
-            <div class="solution-card">
+            <div class="solution-card spotlight">
                 <div class="solution-icon">🔒</div>
                 <h3>보안 검증 완료</h3>
                 <p class="solution-desc">
@@ -1000,7 +1139,7 @@
         <p class="section-desc">모든 솔루션은 Hundred Core가 자체 운영 중. 회사 deploy 전 데모로 직접 검증 가능.</p>
 
         <div class="cases-grid reveal-stagger reveal">
-            <div class="case-card">
+            <div class="case-card spotlight">
                 <h4>Moonlit Oracle</h4>
                 <div class="case-tag">결제 funnel + AI 영상 통합</div>
                 <ul class="case-features">
@@ -1013,7 +1152,7 @@
                 <a href="https://moonlitoracle.com" target="_blank" rel="noopener" class="case-link">moonlitoracle.com →</a>
             </div>
 
-            <div class="case-card">
+            <div class="case-card spotlight">
                 <h4>Blog Autopilot</h4>
                 <div class="case-tag">매일 12 포스트 자동 발행</div>
                 <ul class="case-features">
@@ -1026,7 +1165,7 @@
                 <a href="https://reafdev.blogspot.com" target="_blank" rel="noopener" class="case-link">reafdev.blogspot.com →</a>
             </div>
 
-            <div class="case-card">
+            <div class="case-card spotlight">
                 <h4>Active 앱 4종 운영</h4>
                 <div class="case-tag">Play Store 출시 + 웹</div>
                 <ul class="case-features">
@@ -1056,6 +1195,53 @@
             <div class="stack-cat"><h5>Mobile</h5><ul><li>Flutter (legacy 유지보수)</li><li>WebView 래퍼 패턴</li><li>Firebase Auth + Analytics</li><li>AdMob 통합</li></ul></div>
             <div class="stack-cat"><h5>Security</h5><ul><li>Zod 입력 검증</li><li>CSP + 보안 헤더</li><li>Supabase RLS</li><li>RPC audit log</li></ul></div>
         </div>
+
+        <!-- Marquee scroll — 전체 stack 한눈에 흐름 -->
+        <div class="marquee-wrap">
+            <div class="marquee">
+                <span class="marquee-pill"><span class="dot"></span>Next.js 16</span>
+                <span class="marquee-pill"><span class="dot violet"></span>React 19</span>
+                <span class="marquee-pill"><span class="dot"></span>TypeScript</span>
+                <span class="marquee-pill"><span class="dot"></span>Tailwind 4</span>
+                <span class="marquee-pill"><span class="dot green"></span>Supabase</span>
+                <span class="marquee-pill"><span class="dot violet"></span>Vercel</span>
+                <span class="marquee-pill"><span class="dot amber"></span>fal.ai</span>
+                <span class="marquee-pill"><span class="dot"></span>OpenRouter</span>
+                <span class="marquee-pill"><span class="dot amber"></span>ElevenLabs</span>
+                <span class="marquee-pill"><span class="dot violet"></span>Seedance 2</span>
+                <span class="marquee-pill"><span class="dot violet"></span>Kling 2.5</span>
+                <span class="marquee-pill"><span class="dot amber"></span>SeedVR2</span>
+                <span class="marquee-pill"><span class="dot green"></span>Ko-fi</span>
+                <span class="marquee-pill"><span class="dot"></span>TossPayments</span>
+                <span class="marquee-pill"><span class="dot green"></span>Resend</span>
+                <span class="marquee-pill"><span class="dot"></span>GitHub Actions</span>
+                <span class="marquee-pill"><span class="dot amber"></span>Flutter</span>
+                <span class="marquee-pill"><span class="dot violet"></span>Firebase</span>
+                <span class="marquee-pill"><span class="dot"></span>Zod</span>
+                <span class="marquee-pill"><span class="dot green"></span>AdMob</span>
+                <!-- 동일 set 중복으로 무한 loop -->
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>Next.js 16</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot violet"></span>React 19</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>TypeScript</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>Tailwind 4</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot green"></span>Supabase</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot violet"></span>Vercel</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot amber"></span>fal.ai</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>OpenRouter</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot amber"></span>ElevenLabs</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot violet"></span>Seedance 2</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot violet"></span>Kling 2.5</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot amber"></span>SeedVR2</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot green"></span>Ko-fi</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>TossPayments</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot green"></span>Resend</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>GitHub Actions</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot amber"></span>Flutter</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot violet"></span>Firebase</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot"></span>Zod</span>
+                <span class="marquee-pill" aria-hidden="true"><span class="dot green"></span>AdMob</span>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -1066,10 +1252,10 @@
         <p class="section-desc">평균 4-12주. 30% 선급 / 70% 완료 결제 표준. 진행 중 weekly 진척도 보고.</p>
 
         <div class="process-grid reveal-stagger reveal">
-            <div class="process-card"><div class="process-num">01</div><h4>무료 상담</h4><p>1-2시간 미팅으로 무엇이 필요한지·예산·일정 같이 정리. 어떤 솔루션이 맞는지 안내.</p></div>
-            <div class="process-card"><div class="process-num">02</div><h4>견적·계약</h4><p>1-3일 내 견적서 발송. 비밀유지 계약 + 30% 선급 → 착수.</p></div>
-            <div class="process-card"><div class="process-num">03</div><h4>구축·런칭</h4><p>2-8주. 우리 코드를 귀사 브랜드·도메인에 맞춰 적용 → 테스트 → 정식 오픈.</p></div>
-            <div class="process-card"><div class="process-num">04</div><h4>인계·운영</h4><p>전체 코드 + 운영 가이드 인계. 무상 AS 1-6개월 + 월 유지보수 옵션.</p></div>
+            <div class="process-card spotlight"><div class="process-num">01</div><h4>무료 상담</h4><p>1-2시간 미팅으로 무엇이 필요한지·예산·일정 같이 정리. 어떤 솔루션이 맞는지 안내.</p></div>
+            <div class="process-card spotlight"><div class="process-num">02</div><h4>견적·계약</h4><p>1-3일 내 견적서 발송. 비밀유지 계약 + 30% 선급 → 착수.</p></div>
+            <div class="process-card spotlight"><div class="process-num">03</div><h4>구축·런칭</h4><p>2-8주. 우리 코드를 귀사 브랜드·도메인에 맞춰 적용 → 테스트 → 정식 오픈.</p></div>
+            <div class="process-card spotlight"><div class="process-num">04</div><h4>인계·운영</h4><p>전체 코드 + 운영 가이드 인계. 무상 AS 1-6개월 + 월 유지보수 옵션.</p></div>
         </div>
     </div>
 </section>
@@ -1081,19 +1267,19 @@
         <p class="section-desc">모두 Hundred Core 자체 개발·운영. Play Store 또는 웹에서 직접 검증 가능.</p>
 
         <div class="portfolio-grid reveal-stagger reveal">
-            <a href="https://moonlitoracle.com" target="_blank" rel="noopener" class="portfolio-card">
+            <a href="https://moonlitoracle.com" target="_blank" rel="noopener" class="portfolio-card spotlight">
                 <img src="/icons/moonlit-oracle.png" alt="Moonlit Oracle" onerror="this.style.display='none'">
                 <h6>Moonlit Oracle</h6><p>K-사주 글로벌 웹</p>
             </a>
-            <a href="/lotto-rich/" class="portfolio-card">
+            <a href="/lotto-rich/" class="portfolio-card spotlight">
                 <img src="/icons/lottorich.png" alt="로또비서" onerror="this.style.display='none'">
                 <h6>로또비서</h6><p>로또 번호 추천</p>
             </a>
-            <a href="/dreamflow/" class="portfolio-card">
+            <a href="/dreamflow/" class="portfolio-card spotlight">
                 <img src="/icons/dreamflow.png" alt="DreamFlow" onerror="this.style.display='none'">
                 <h6>DreamFlow</h6><p>꿈 일기 + AI 해몽</p>
             </a>
-            <a href="https://play.google.com/store/apps/details?id=com.reaf.nyanquest" target="_blank" rel="noopener" class="portfolio-card">
+            <a href="https://play.google.com/store/apps/details?id=com.reaf.nyanquest" target="_blank" rel="noopener" class="portfolio-card spotlight">
                 <img src="/icons/nyanquest.png" alt="냥퀘스트" onerror="this.style.display='none'">
                 <h6>냥퀘스트</h6><p>AI GM 협동 RPG</p>
             </a>
@@ -1170,6 +1356,23 @@
 </section>
 
 <script>
+    // ── Mouse Spotlight on cards (Aceternity·Linear 영감) ──
+    (function() {
+        // mobile/touch 디바이스는 skip (성능)
+        if (window.matchMedia('(hover: none)').matches) return;
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.spotlight').forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                // 카드가 viewport 밖이면 skip
+                if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                el.style.setProperty('--mx', x + '%');
+                el.style.setProperty('--my', y + '%');
+            });
+        }, { passive: true });
+    })();
+
     // ── Reveal on scroll (IntersectionObserver) ──
     (function() {
         if (!('IntersectionObserver' in window)) return;
