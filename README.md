@@ -16,9 +16,9 @@ AI 자동화 풀스택 솔루션 — 1인 개발사. Next.js · Supabase · fal.
 
 ## 사례 (자체 운영 검증 시스템)
 
-- **Moonlit Oracle** (<https://moonlitoracle.com>) — 결제 funnel + AI 영상 통합 (11명)
+- **Moonlit Oracle** (<https://moonlitoracle.com>) — 결제 funnel + AI 영상 통합
 - **Blog Autopilot** (<https://reafdev.blogspot.com>) — 매일 12 포스트 자동 발행
-- **Active 앱 5종**: 로또비서 (223) / 드림플로우 (22) / Moonlit Oracle (11) / 퀀트로또 / 냥퀘스트
+- **Active 앱 4종**: 로또비서 / 드림플로우 / Moonlit Oracle / 냥퀘스트
 
 ## 사업자 정보
 
