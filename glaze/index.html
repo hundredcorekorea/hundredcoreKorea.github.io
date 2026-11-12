@@ -56,6 +56,19 @@ h2{font-size:22px;font-weight:800;margin:0 0 20px;letter-spacing:-.025em}
 .points{list-style:none;padding:0;margin:0;display:grid;gap:14px}
 .points li{background:var(--peach);border-radius:20px;padding:18px 20px;font-size:16px}
 .points b{display:block;font-size:17px;margin-bottom:2px}
+.when,.steps{list-style:none;padding:0;margin:0}
+.when li{padding:18px 0;border-top:1px solid #f0dfd6}
+.when li:last-child{border-bottom:1px solid #f0dfd6}
+.when b{display:block;font-size:17px;margin-bottom:2px}
+.when span{color:var(--dim);font-size:15px}
+.steps{counter-reset:s;display:grid;gap:18px}
+.steps li{counter-increment:s;position:relative;padding-left:48px;font-size:15px;color:var(--dim)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--coral);color:var(--ink);font-weight:800;display:grid;place-items:center}
+.steps b{display:block;color:var(--ink);font-size:17px;margin-bottom:2px}
+.share p{margin:0 0 14px;color:var(--dim)}
+.share button{font:inherit;font-weight:700;background:var(--peach);color:var(--ink);border:0;border-radius:999px;padding:14px 24px;cursor:pointer}
+.share button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.share .msg{margin:10px 0 0;font-size:14px;min-height:1.4em}
 .note{font-size:13px;color:var(--dim);margin:44px 0 0}
 
 /* sticky bar */
@@ -77,16 +90,45 @@ h2{font-size:22px;font-weight:800;margin:0 0 20px;letter-spacing:-.025em}
   <img src="shot2.jpg" alt="Glaze 촬영 화면" width="270" height="480" />
 </div>
 
-<main class="wrap"><section>
-  <h2>써 보면 이런 점이 달라요</h2>
-  <ul class="points">
-    <li><b>설정을 몰라도 돼요</b>장면에 맞는 밝기를 자동으로 맞춰 줘요.</li>
-    <li><b>어디에 둘지 알려 줘요</b>찍는 화면 위에 구도 윤곽선이 떠요.</li>
-    <li><b>잘 나온 것만 남겨요</b>연속으로 찍은 사진 중 선명한 것을 골라 줘요.</li>
-    <li><b>가입이 없어요</b>사진 분석은 폰 안에서만 해요.</li>
+<main class="wrap">
+<section>
+  <h2>이럴 때 꺼내 쓰는 카메라예요</h2>
+  <ul class="when">
+    <li><b>여행에서 누군가를 찍어 줄 때</b><span>사람을 화면 어디에 둘지 윤곽선으로 보여 줘요. 구도를 몰라도 따라 놓기만 하면 돼요.</span></li>
+    <li><b>밥상 앞에서</b><span>"음식 촬영이네요" 하고 먼저 알아보고, 접시 위가 하얗게 날아가지 않게 밝기를 맞춰요.</span></li>
+    <li><b>야경, 달, 불꽃놀이, 콘서트</b><span>어두운 장면은 어떻게 맞출지 막막하죠. 장면별 노출을 미리 맞춰 둬요.</span></li>
+    <li><b>풍경 앞에서</b><span>수평선과 수평계, 어울리는 구도 4가지를 예시와 함께 골라 볼 수 있어요.</span></li>
   </ul>
-  <p class="note">앱 안의 예시 사진은 설명용으로 AI가 생성한 이미지이고 앱에 "AI"로 표시돼 있어요. 사용 통계는 동의한 경우에만 익명으로 수집해요. <a href="../privacy/glaze/">개인정보처리방침</a></p>
-</section></main>
+</section>
+
+<section>
+  <h2>찍는 순서는 이래요</h2>
+  <ol class="steps">
+    <li><b>켜고 겨눠요</b>장면을 알아보고 "가이드를 드릴까요?" 하고 물어봐요. 필요 없으면 닫으면 돼요.</li>
+    <li><b>여러 장 찍어요</b>터치 초점, 두 손가락 줌, 3초·10초 타이머를 지원해요.</li>
+    <li><b>잘 나온 걸 골라 줘요</b>선명하고 밝기가 고르고 눈 뜬 사진을 추천해요. 고르는 건 내가 해요.</li>
+    <li><b>한 번에 다듬고 올려요</b>밝게, 따뜻하게, 또렷하게, 4:5·1:1 자르기. 보정본은 새 파일이라 원본은 그대로예요.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>믿고 써도 되는 점</h2>
+  <ul class="points">
+    <li><b>가입이 없어요</b>켜면 바로 찍어요.</li>
+    <li><b>사진은 폰 안에만 있어요</b>장면 인식과 분석을 폰에서 해서 서버로 보내지 않아요.</li>
+    <li><b>지금은 제한 없이 써요</b>초기 이용자에게는 모든 기능을 열어 두고 있어요.</li>
+  </ul>
+</section>
+
+<section class="share">
+  <h2>같이 찍는 친구가 있다면</h2>
+  <p>링크 하나면 돼요. 안드로이드에서 열면 바로 받을 수 있어요.</p>
+  <button id="share" type="button">링크 보내기</button>
+  <p id="shareMsg" class="msg" role="status"></p>
+</section>
+
+<p class="note">앱 안의 예시 사진은 설명용으로 AI가 생성한 이미지이고 앱에 "AI"로 표시돼 있어요. 일부 폰은 수동 노출을 지원하지 않아 일부 장면 설정이 제한될 수 있어요. 사용 통계는 동의한 경우에만 익명으로 수집해요. <a href="../privacy/glaze/">개인정보처리방침</a></p>
+</main>
 
 <div class="bar"><a id="play2" href="https://play.google.com/store/apps/details?id=com.hundredcore.glaze">Google Play에서 받기</a></div>
 <script>
@@ -96,6 +138,10 @@ var r=new URLSearchParams(location.search).get('ref');
 if(r&&/^[\w-]{1,32}$/.test(r)){['play','play2'].forEach(function(id){var a=document.getElementById(id);
 a.href+='&referrer='+encodeURIComponent('utm_source=share&utm_content='+r);});}
 }catch(e){}})();
+(function(){var b=document.getElementById('share'),m=document.getElementById('shareMsg');if(!b)return;
+b.addEventListener('click',function(){var u=location.origin+location.pathname;
+if(navigator.share){navigator.share({title:'Glaze',text:'찍는 순간 장면을 알아보는 카메라',url:u}).catch(function(){});return}
+if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){m.textContent='링크를 복사했어요.'},function(){m.textContent=u})}else{m.textContent=u}});})();
 </script>
 </body>
 </html>
